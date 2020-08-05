@@ -52,9 +52,6 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 
-" Highlight current line
-set cursorline
-
 " Visual autocompletion for command-line mode
 set wildmenu
 
@@ -64,6 +61,13 @@ set linebreak
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
+
+" Highlight current line, but only in active window
+augroup CursorLineOnlyInActiveWindow
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
+augroup END
 
 "-------------------------------
 " Plugins Instalation (vim-plug)
@@ -126,7 +130,7 @@ Plug 'yegappan/grep'
 call plug#end()
 
 "----------------------
-" Plugins configuration
+" Plugins Configuration
 "----------------------
 " ### Gruvbox ###
 colorscheme gruvbox
@@ -136,7 +140,7 @@ set background=dark
 " Automatically open when Vim starts up
 autocmd vimenter * NERDTree
 
-" After automatically NERDTree is opened the cursor is moved to left window
+" After automatically NERDTree is opened the cursor is moved to right window
 autocmd vimenter * wincmd l
 
 " Automatically open when Vim starts up if no files were specified
@@ -145,6 +149,24 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Resize tree explorer
+let g:NERDTreeWinSize=30
+
+" ### Undotree ###
+" Open the undotree window relative to the tracked window and resizes it
+let g:undotree_CustomUndotreeCmd = 'vertical 30 new'
+let g:undotree_CustomDiffpanelCmd= 'belowright 10 new'
+
+" Undotree window get focus after being opened
+let g:undotree_SetFocusWhenToggle = 1
+
+" Set short relative timestamps (e.g. '5 s' rather '5 seconds ago')
+let g:undotree_RelativeTimestamp=1
+let g:undotree_ShortIndicators=1
+
+" Close Vim if the only window left open is a undotree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:UndotreeToggle") && b:UndotreeToggle.isTabTree()) | q | endif
 
 " ### Ctrlp ###
 " Disable per-session caching
@@ -156,7 +178,7 @@ let g:ctrlp_use_caching=0
 " Setting <Leader> key to spacebar
 let mapleader=" "
 
-" toggle relative numbering
+" Toggle relative numbering
 nnoremap <C-n> :set rnu!<CR>
 
 " Ctrl+h to stop searching
@@ -189,7 +211,7 @@ nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 
 " NERDTree toggle and resizing
-nnoremap <Leader>pt :NERDTreeToggle<CR> :vertical resize 30<CR>
+nnoremap <Leader>pt :NERDTreeToggle<CR>
 
 " Find and reveal a file in the NERDTree window
 nnoremap <Leader>pf :NERDTreeFind<SPACE>
@@ -200,3 +222,19 @@ nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 
 " Start ripgrep
 nnoremap <Leader>ps :Rg<SPACE>
+
+" Navigation through tabs
+nnoremap tk :tabnew<CR>
+nnoremap tj :tabclose<CR>
+nnoremap tl :tabnext<CR>
+nnoremap th :tabprev<CR>
+
+" Callback function, so the key mappings only works on the undotree window
+function g:Undotree_CustomMap()
+    " Clear undotree history
+    nmap <buffer> H <plug>UndotreeClearHistory
+endfunc
+
+" Split window
+nnoremap <Leader>wh :sp<CR>
+nnoremap <Leader>wv :vsp<CR>

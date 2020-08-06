@@ -1,3 +1,20 @@
+"           _nnnn
+"          dGGGGMMb         Iran Braga
+"         @p~qp~~qMb        https://github.com/iranbrg
+"         M|@||@) M|        http://www.linkedin.com/in/iranbrg
+"         @,----.JM|
+"        JS^\__/  qKL
+"       dZP        qKRb
+"      dZP          qKKb
+"     fZP            SMMb
+"     HZM            MMMM
+"     FqM            MMMM
+"   __| '.        |\dS'qML
+"  |    `.       | `' \Zq
+" _)      \.___.,|     .'
+" \____   )MMMMMP|   .'
+"      `-'       `--'
+
 "----------------
 " Some Pre-config
 "----------------
@@ -15,6 +32,14 @@ endif
 " Create the 'undodir' folder if it doesn't exist
 if !isdirectory($HOME."/.vim/undodir")
     call mkdir($HOME."/.vim/undodir", "", 0700)
+endif
+
+" Automatic vim-plug (plugin manager) installation
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    " --sync flag is used to block the execution until the installer finishes
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 "---------------------
@@ -69,11 +94,11 @@ augroup CursorLineOnlyInActiveWindow
     autocmd WinLeave * setlocal nocursorline
 augroup END
 
-"-------------------------------
-" Plugins Instalation (vim-plug)
-"-------------------------------
+"--------------------
+" Plugins Instalation
+"--------------------
 " Specify a directory for plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim/autoload/plugged')
 
 " ### Text editing ###
 " Code completion (after installation run: cd ~/.vim/plugged/youcompleteme and
@@ -110,8 +135,9 @@ Plug 'airblade/vim-gitgutter'
 " Color scheme
 Plug 'morhetz/gruvbox'
 
-" Statusline
-Plug 'itchyny/lightline.vim'
+" Statusline and its themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " ### Utilities ###
 " Make a yanked region apparent
@@ -150,7 +176,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Resize tree explorer
+" Resize NERDTree window
 let g:NERDTreeWinSize=30
 
 " ### Undotree ###
@@ -178,40 +204,42 @@ let g:ctrlp_use_caching=0
 " Setting <Leader> key to spacebar
 let mapleader=" "
 
+" Stop indenting when text is pasted
+set pastetoggle=<F2>
+
 " Toggle relative numbering
-nnoremap <C-n> :set rnu!<CR>
+nnoremap <silent> <F3> :set rnu!<CR>
 
 " Ctrl+h to stop searching
-vnoremap <C-h> :nohlsearch<cr>
-nnoremap <C-h> :nohlsearch<cr>
+vnoremap <silent> <C-h> :nohlsearch<cr>
+nnoremap <silent> <C-h> :nohlsearch<cr>
 
 " (Shift+)Tab (de)indents code
-inoremap <S-Tab> <C-D>
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
-nnoremap <Tab> >>_
-nnoremap <S-Tab> <<_
+inoremap <silent> <S-Tab> <C-d>
+vnoremap <silent> <Tab> >gv
+vnoremap <silent> <S-Tab> <gv
+nnoremap <silent> <Tab> >>_
+nnoremap <silent> <S-Tab> <<_
 
-" TODO: Alt+j/Alt+k to move code lines/blocks up and down (find a away to map
-" the Alt key)
-" nnoremap <A-j> :m .+1<CR>==
-" nnoremap <A-k> :m .-2<CR>==
-" inoremap <A-j> <Esc>:m .+1<CR>==gi
-" inoremap <A-k> <Esc>:m .-2<CR>==gi
-" vnoremap <A-j> :m '>+1<CR>gv=gv
-" vnoremap <A-k> :m '<-2<CR>gv=gv
+" F4/F5 to move code lines/blocks up and down
+nnoremap <F4> :m .+1<CR>==
+nnoremap <F5> :m .-2<CR>==
+inoremap <F4> <Esc>:m .+1<CR>==gi
+inoremap <F5> <Esc>:m .-2<CR>==gi
+vnoremap <F4> :m '>+1<CR>gv=gv
+vnoremap <F5> :m '<-2<CR>gv=gv
 
 " Navigation through windows
-nnoremap <leader>h :wincmd h<CR>
-nnoremap <leader>j :wincmd j<CR>
-nnoremap <leader>k :wincmd k<CR>
-nnoremap <leader>l :wincmd l<CR>
+nnoremap <silent> <leader>h :wincmd h<CR>
+nnoremap <silent> <leader>j :wincmd j<CR>
+nnoremap <silent> <leader>k :wincmd k<CR>
+nnoremap <silent> <leader>l :wincmd l<CR>
 
 " Undotree toggle
-nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <silent> <F7> :UndotreeToggle<CR>
 
-" NERDTree toggle and resizing
-nnoremap <Leader>pt :NERDTreeToggle<CR>
+" NERDTree toggle
+nnoremap <silent> <F6> :NERDTreeToggle<CR>
 
 " Find and reveal a file in the NERDTree window
 nnoremap <Leader>pf :NERDTreeFind<SPACE>
@@ -223,11 +251,11 @@ nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 " Start ripgrep
 nnoremap <Leader>ps :Rg<SPACE>
 
-" Navigation through tabs
-nnoremap tk :tabnew<CR>
-nnoremap tj :tabclose<CR>
-nnoremap tl :tabnext<CR>
-nnoremap th :tabprev<CR>
+" Navigate through tabs
+nnoremap <silent> tk :tabnew<CR>
+nnoremap <silent> tj :tabclose<CR>
+nnoremap <silent> tl :tabnext<CR>
+nnoremap <silent> th :tabprev<CR>
 
 " Callback function, so the key mappings only works on the undotree window
 function g:Undotree_CustomMap()
@@ -236,5 +264,56 @@ function g:Undotree_CustomMap()
 endfunc
 
 " Split window
-nnoremap <Leader>wh :sp<CR>
-nnoremap <Leader>wv :vsp<CR>
+nnoremap <silent> <Leader>wh :sp<CR>
+nnoremap <silent> <Leader>wv :vsp<CR>
+
+" Close window
+nnoremap <silent> <Leader>wc :wincmd c<CR>
+
+" Resize window
+noremap <silent> <Leader><Left> :vertical resize +5<CR>
+noremap <silent> <Leader><Right> :vertical resize -5<CR>
+noremap <silent> <Leader><Up> :resize +5<CR>
+noremap <silent> <Leader><Down> :resize -5<CR>
+noremap <silent> <Leader>= :wincmd =<CR>
+
+" Open terminal window
+nnoremap <Leader>wt :terminal<CR>
+
+" Close terminal window
+tnoremap <Leader>wc <C-\><C-n>:q!<CR>
+
+" Enter terminal normal mode
+tnoremap <ESC> <C-\><C-n>
+
+" Change window from vertical to horizontal
+map <Leader>w<Up> :call VerticalToHorizontal()<CR>
+
+" Change window from horizontal to vertical
+map <Leader>w<Down> :call HorizontalTovertical()<CR>
+
+" Close NERDTree if it's open before flip window from vertical to horizontal and after that reopen it
+function g:VerticalToHorizontal()
+    if exists("g:NERDTree") && g:NERDTree.IsOpen()
+        execute ":NERDTreeClose"
+        execute ":wincmd" "t"
+        execute ":wincmd" "H"
+        execute ":NERDTree"
+    else
+        execute ":wincmd" "t"
+        execute ":wincmd" "H"
+    endif
+endfunc
+
+" Close NERDTree if it's open before flip window from horizontal to vertical and after that reopen it
+function g:HorizontalTovertical()
+    if exists("g:NERDTree") && g:NERDTree.IsOpen()
+        execute ":NERDTreeClose"
+        execute ":wincmd" "t"
+        execute ":wincmd" "K"
+        execute ":NERDTree"
+    else
+        execute ":wincmd" "t"
+        execute ":wincmd" "K"
+    endif
+endfunc

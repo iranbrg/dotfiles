@@ -95,15 +95,14 @@ augroup CursorLineOnlyInActiveWindow
 augroup END
 
 "--------------------
-" Plugins Instalation
+" Plugins Installation
 "--------------------
 " Specify a directory for plugins
 call plug#begin('~/.vim/autoload/plugged')
 
 " ### Text editing ###
-" Code completion (after installation run: cd ~/.vim/plugged/youcompleteme and
-" python3 install.py --all)
-Plug 'valloric/youcompleteme'
+" Code completion
+Plug 'valloric/youcompleteme', { 'do': 'python3 install.py --all' }
 
 " Text alignment
 Plug 'godlygeek/tabular'
@@ -113,6 +112,9 @@ Plug 'tpope/vim-commentary'
 
 " Grammar checker
 Plug 'rhysd/vim-grammarous'
+
+" Linter
+ Plug 'w0rp/ale'
 
 " ### Files ###
 " File finder
@@ -317,3 +319,6 @@ function g:HorizontalTovertical()
         execute ":wincmd" "K"
     endif
 endfunc
+
+" Fast edit '.vimrc' file
+nmap <leader>e :e! $MYVIMRC<CR>

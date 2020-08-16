@@ -200,6 +200,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:UndotreeToggle") && b:Undotr
 " Disable per-session caching
 let g:ctrlp_use_caching=0
 
+" ### Vim-airline ###
+let g:airline_powerline_fonts = 1
+
 "------------
 " Keybindings
 "------------

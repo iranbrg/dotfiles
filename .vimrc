@@ -1,19 +1,6 @@
-"           _nnnn
-"          dGGGGMMb         Iran Braga
-"         @p~qp~~qMb        https://github.com/iranbrg
-"         M|@||@) M|        http://www.linkedin.com/in/iranbrg
-"         @,----.JM|
-"        JS^\__/  qKL
-"       dZP        qKRb
-"      dZP          qKKb
-"     fZP            SMMb
-"     HZM            MMMM
-"     FqM            MMMM
-"   __| '.        |\dS'qML
-"  |    `.       | `' \Zq
-" _)      \.___.,|     .'
-" \____   )MMMMMP|   .'
-"      `-'       `--'
+"Iran Braga
+"https://github.com/iranbrg
+"http://www.linkedin.com/in/iranbrg
 
 "----------------
 " Some Pre-config
@@ -23,6 +10,30 @@ set nocompatible
 
 " Setting the output encoding shown in the terminal
 set encoding=UTF-8
+
+" Always show the status line at the bottom, even if you only have one window open.                                
+set laststatus=2
+
+" Let you hide a buffer (i.e. have a buffer that isn't shown in any window)
+set hidden
+
+" Enable mouse support
+set mouse+=a
+
+" To get rid of thing like --INSERT--
+set noshowmode
+
+" To get rid of display of last command
+set noshowcmd
+
+" Load filetype-specific indent and plugin files
+filetype plugin indent on
+
+" Improve smoothness of redrawing
+set ttyfast
+
+" Set to force 256 colors
+set t_Co=256
 
 " Create the '.vim' folder if it doesn't exist
 if !isdirectory($HOME."/.vim")
@@ -36,8 +47,7 @@ endif
 
 " Automatic vim-plug (plugin manager) installation
 if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     " --sync flag is used to block the execution until the installer finishes
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -52,10 +62,10 @@ syntax on
 set showmatch
 
 " Use 4 spaces instead of tabs during formatting
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
+set tabstop=4       " Number of visual spaces per TAB
+set softtabstop=4   " Number of spaces in tab when editing
+set shiftwidth=4    " Insert 4 spaces on a tab
+set expandtab       " Tabs are spaces
 
 " Smart indenting
 set autoindent
@@ -66,10 +76,10 @@ set nu
 set rnu
 
 " Search config
+set hlsearch
+set incsearch
 set ignorecase
 set smartcase
-set hls
-set incsearch
 
 " Backup config
 set noswapfile
@@ -79,6 +89,7 @@ set undofile
 
 " Visual autocompletion for command-line mode
 set wildmenu
+set wildmode=list:full
 
 " Have lines wrap instead of continue off-screen
 set linebreak
@@ -87,6 +98,9 @@ set linebreak
 set splitbelow
 set splitright
 
+" Show lines above and below cursor (when possible)
+set scrolloff=3
+
 " Highlight current line, but only in active window
 augroup CursorLineOnlyInActiveWindow
     autocmd!
@@ -94,11 +108,11 @@ augroup CursorLineOnlyInActiveWindow
     autocmd WinLeave * setlocal nocursorline
 augroup END
 
-"--------------------
+"---------------------
 " Plugins Installation
-"--------------------
+"---------------------
 " Specify a directory for plugins
-call plug#begin('~/.vim/autoload/plugged')
+call plug#begin('~/.vim/plugged')
 
 " ### Text editing ###
 " Code completion
@@ -110,8 +124,12 @@ Plug 'godlygeek/tabular'
 " Comment stuff out
 Plug 'tpope/vim-commentary'
 
-" Grammar checker
-Plug 'rhysd/vim-grammarous'
+" Easily delete, change and add surroundings in pairs.
+Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
+
+" Wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
+Plug 'tpope/vim-endwise'
 
 " Linter
  Plug 'w0rp/ale'
@@ -127,7 +145,7 @@ Plug 'scrooloose/nerdtree'
 " Git integration
 Plug 'tpope/vim-fugitive'
 
-" Git status in tree explorer
+" Git status in NERDTree explorer
 Plug 'xuyuanp/nerdtree-git-plugin'
 
 " Shows which lines have been added, modified, or removed and more
@@ -153,6 +171,12 @@ Plug 'mbbill/undotree'
 
 " Integrate grep like utilities (specially ripgrep)
 Plug 'yegappan/grep'
+
+" Display the indention levels
+Plug 'yggdroot/indentline'
+
+" A filetype plugin for csv files 
+Plug 'chrisbra/csv.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -196,18 +220,52 @@ let g:undotree_ShortIndicators=1
 " Close Vim if the only window left open is a undotree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:UndotreeToggle") && b:UndotreeToggle.isTabTree()) | q | endif
 
-" ### Ctrlp ###
+" ### CtrlP ###
 " Disable per-session caching
 let g:ctrlp_use_caching=0
 
 " ### Vim-airline ###
+" Enable powerline fonts
 let g:airline_powerline_fonts = 1
+
+" Enable plain ascii symbols
+let g:airline_symbols_ascii = 1
+
+" Smarter tab line
+let g:airline#extensions#tabline#enabled = 1
+
+" Enable tab line to show buffer number
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" Disable setting the 'statusline' option 
+let g:airline_skip_empty_sections = 1
+
+" Set which path formatter vim-airline uses on tab line
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+" ### indentLine ###
+let g:indentLine_enabled = 1
+let g:indentLine_concealcursor = 0
+let g:indentLine_char = '┆'
+let g:indentLine_faster = 1
 
 "------------
 " Keybindings
 "------------
 " Setting <Leader> key to spacebar
 let mapleader=" "
+
+" Make backspace behave more reasonably, in that you can backspace over anything
+set backspace=indent,eol,start
+
+" Unbind the annoying 'Q' which in normal mode enters Ex mode
+nmap Q <Nop> 
+
+" Search results are centered
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
 
 " Stop indenting when text is pasted
 set pastetoggle=<F2>

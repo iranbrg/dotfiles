@@ -18,7 +18,8 @@ set laststatus=2
 set hidden
 
 " Enable mouse support
-set mouse+=a
+set mouse=a
+set mousemodel=popup
 
 " To get rid of thing like --INSERT--
 set noshowmode
@@ -116,7 +117,7 @@ call plug#begin('~/.vim/plugged')
 
 " ### Text editing ###
 " Code completion
-Plug 'valloric/youcompleteme', { 'do': 'python3 install.py --all' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Text alignment
 Plug 'godlygeek/tabular'
@@ -126,7 +127,6 @@ Plug 'tpope/vim-commentary'
 
 " Easily delete, change and add surroundings in pairs.
 Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
 
 " Wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
 Plug 'tpope/vim-endwise'
@@ -135,8 +135,10 @@ Plug 'tpope/vim-endwise'
  Plug 'w0rp/ale'
 
 " ### Files ###
-" File finder
-Plug 'kien/ctrlp.vim'
+" Fuzzy finder and more)
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter'
 
 " Tree explorer
 Plug 'scrooloose/nerdtree'
@@ -151,6 +153,19 @@ Plug 'xuyuanp/nerdtree-git-plugin'
 " Shows which lines have been added, modified, or removed and more
 Plug 'airblade/vim-gitgutter'
 
+" ### Utilities ###
+" Multiple cursors
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" Undo history visualizer
+Plug 'mbbill/undotree'
+
+" Display the indention levels
+Plug 'yggdroot/indentline'
+
+" A filetype plugin for csv files 
+Plug 'chrisbra/csv.vim'
+
 " ### GUI ###
 " Color scheme
 Plug 'morhetz/gruvbox'
@@ -159,24 +174,12 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" ### Utilities ###
-" Make a yanked region apparent
-Plug 'machakann/vim-highlightedyank'
+" Adds file type icons and its colors (must be the last intalled plugin)
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
 
-" Multiple cursors
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-
-" Undo history visualizer
-Plug 'mbbill/undotree'
-
-" Integrate grep like utilities (specially ripgrep)
-Plug 'yegappan/grep'
-
-" Display the indention levels
-Plug 'yggdroot/indentline'
-
-" A filetype plugin for csv files 
-Plug 'chrisbra/csv.vim'
+" Support for expanding HTML abbreviations like emmet
+Plug 'mattn/emmet-vim'
 
 " Initialize plugin system
 call plug#end()
@@ -187,6 +190,9 @@ call plug#end()
 " ### Gruvbox ###
 colorscheme gruvbox
 set background=dark
+
+" Changes dark mode contrast
+let g:gruvbox_contrast_dark = 'hard'
 
 " ### NERDTree ###
 " Automatically open when Vim starts up
@@ -202,13 +208,22 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Show hidden files by default
+let NERDTreeShowHidden=1
+
 " Resize NERDTree window
-let g:NERDTreeWinSize=30
+let g:NERDTreeWinSize=25
+
+" Don't show messages above file tree
+let NERDTreeMinimalUI=1
+
+" Remove a buffer when a file is deleted or renamed via a context menu command
+let NERDTreeAutoDeleteBuffer=1
 
 " ### Undotree ###
 " Open the undotree window relative to the tracked window and resizes it
 let g:undotree_CustomUndotreeCmd = 'vertical 30 new'
-let g:undotree_CustomDiffpanelCmd= 'belowright 10 new'
+let g:undotree_CustomDiffpanelCmd = 'belowright 10 new'
 
 " Undotree window get focus after being opened
 let g:undotree_SetFocusWhenToggle = 1
@@ -228,26 +243,156 @@ let g:ctrlp_use_caching=0
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
 
-" Enable plain ascii symbols
-let g:airline_symbols_ascii = 1
-
-" Smarter tab line
-let g:airline#extensions#tabline#enabled = 1
-
-" Enable tab line to show buffer number
-let g:airline#extensions#tabline#buffer_nr_show = 1
-
 " Disable setting the 'statusline' option 
 let g:airline_skip_empty_sections = 1
+
+" Enable tabline extension
+let g:airline#extensions#tabline#enabled = 1
+
+" Enable tabline to show buffer number
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " Set which path formatter vim-airline uses on tab line
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
+" Truncate sha1 commits shown in the statusline at this number of characters 
+let g:airline#extensions#branch#sha1_len = 6
+
+" Change how columns are displayed for the csv extension
+let g:airline#extensions#csv#column_display = 'Name'
+
+" Invert the order that branch and hunks appear in the statusline
+autocmd VimEnter * let g:airline_section_b = airline#section#create_left(['branch', 'hunks'])
+
+" Force hunks to be shown in smaller window width
+call airline#parts#define_minwidth('hunks', 50)
+
+" Sections layout (first array is the left side, second array is the right side)
+let g:airline#extensions#default#layout = [ [ 'a', 'b', 'c' ], [ 'x', 'y', 'z' ] ]
+
 " ### indentLine ###
-let g:indentLine_enabled = 1
-let g:indentLine_concealcursor = 0
-let g:indentLine_char = '┆'
+" Specify a character to be used as indent line
+let g:indentLine_char = '│'
+
+" Better performance for indentLine
 let g:indentLine_faster = 1
+
+" Specify indent line color
+let g:indentLine_color_term = 240
+
+" Disabled in these file types
+let g:indentLine_fileTypeExclude = ['text']
+
+" Disabled in these buffer types
+let g:indentLine_bufTypeExclude = ['help', 'terminal']
+
+" Disabled in these buffer names (specified by regex)
+let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
+
+" ### Nerdtree-git-plugin ###
+" Enable Nerd Fonts glyphs
+let g:NERDTreeGitStatusUseNerdFonts = 1
+
+" Show ignored status (heavy feature)
+let g:NERDTreeGitStatusShowIgnored = 1
+ 
+" Indicate every single untracked file under an untracked dir (heavy feature)
+let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
+
+" ### Vim-devicons ###
+" Enable open and close directory glyph flags
+let g:DevIconsEnableFoldersOpenClose = 1
+
+" ### fzf ###
+" Centralize fzf window
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+
+" Enable per-command history
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" Set top to bottom layout
+let $FZF_DEFAULT_OPTS = '--layout=reverse --inline-info'
+
+" ### CoC ###
+" Having longer updatetime (default is 4000 ms) leads to noticeable
+" delays and poor user experience
+set updatetime=300
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Don't pass messages to |ins-completion-menu|
+set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use [g and ]g to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Add :Format command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Automatically install extensions on server start
+let g:coc_global_extensions = [
+  \ 'coc-yank',
+  \ 'coc-snippets',
+  \ 'coc-highlight',
+  \ 'coc-pairs',
+  \ 'coc-tabnine',
+  \ 'coc-git',
+  \ 'coc-html',
+  \ 'coc-css',
+  \ 'coc-tsserver',
+  \ 'coc-json',
+  \ 'coc-markdownlint',
+  \ 'coc-python',
+  \ 'coc-java',
+  \ 'coc-sh',
+  \ 'coc-sql',
+  \ 'coc-clangd'
+  \ ]
 
 "------------
 " Keybindings
@@ -302,17 +447,17 @@ nnoremap <silent> <leader>l :wincmd l<CR>
 nnoremap <silent> <F7> :UndotreeToggle<CR>
 
 " NERDTree toggle
-nnoremap <silent> <F6> :NERDTreeToggle<CR>
+nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 
 " Find and reveal a file in the NERDTree window
-nnoremap <Leader>pf :NERDTreeFind<SPACE>
+nnoremap <silent> <C-f> :NERDTreeFind<CR>
 
 " Go to definition
 nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
 nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 
 " Start ripgrep
-nnoremap <Leader>ps :Rg<SPACE>
+nnoremap <Leader>s :Rg<SPACE>
 
 " Navigate through tabs
 nnoremap <silent> tk :tabnew<CR>
@@ -341,7 +486,7 @@ noremap <silent> <Leader><Down> :resize -5<CR>
 noremap <silent> <Leader>= :wincmd =<CR>
 
 " Open terminal window
-nnoremap <Leader>wt :terminal<CR>
+nnoremap <silent> <Leader>wt :terminal<CR>
 
 " Close terminal window
 tnoremap <Leader>wc <C-\><C-n>:q!<CR>
@@ -383,3 +528,6 @@ endfunc
 
 " Fast edit '.vimrc' file
 nmap <leader>e :e! $MYVIMRC<CR>
+
+" remove trailing whitespaces
+command! FixWhiteSpace :%s/\s\+$//e

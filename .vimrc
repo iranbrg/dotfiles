@@ -11,7 +11,7 @@ set nocompatible
 " Setting the output encoding shown in the terminal
 set encoding=UTF-8
 
-" Always show the status line at the bottom, even if you only have one window open.                                
+" Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
 
 " Let you hide a buffer (i.e. have a buffer that isn't shown in any window)
@@ -19,7 +19,6 @@ set hidden
 
 " Enable mouse support
 set mouse=a
-set mousemodel=popup
 
 " To get rid of thing like --INSERT--
 set noshowmode
@@ -35,6 +34,9 @@ set ttyfast
 
 " Set to force 256 colors
 set t_Co=256
+
+" Always have the clipboard be the same as my regular clipboard
+set clipboard+=unnamedplus
 
 " Create the '.vim' folder if it doesn't exist
 if !isdirectory($HOME."/.vim")
@@ -135,7 +137,7 @@ Plug 'tpope/vim-endwise'
  Plug 'w0rp/ale'
 
 " ### Files ###
-" Fuzzy finder and more)
+" Fuzzy finder and more
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
@@ -163,8 +165,11 @@ Plug 'mbbill/undotree'
 " Display the indention levels
 Plug 'yggdroot/indentline'
 
-" A filetype plugin for csv files 
+" A filetype plugin for csv files
 Plug 'chrisbra/csv.vim'
+
+" Displays the ctags-generated tags of the current file, ordered by their scope 
+" Plug 'majutsushi/tagbar'
 
 " ### GUI ###
 " Color scheme
@@ -243,7 +248,7 @@ let g:ctrlp_use_caching=0
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
 
-" Disable setting the 'statusline' option 
+" Disable setting the 'statusline' option
 let g:airline_skip_empty_sections = 1
 
 " Enable tabline extension
@@ -255,7 +260,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 " Set which path formatter vim-airline uses on tab line
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-" Truncate sha1 commits shown in the statusline at this number of characters 
+" Truncate sha1 commits shown in the statusline at this number of characters
 let g:airline#extensions#branch#sha1_len = 6
 
 " Change how columns are displayed for the csv extension
@@ -295,7 +300,7 @@ let g:NERDTreeGitStatusUseNerdFonts = 1
 
 " Show ignored status (heavy feature)
 let g:NERDTreeGitStatusShowIgnored = 1
- 
+
 " Indicate every single untracked file under an untracked dir (heavy feature)
 let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
 
@@ -330,25 +335,19 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use [g and ]g to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -360,8 +359,8 @@ nmap <leader>rn <Plug>(coc-rename)
 command! -nargs=0 Format :call CocAction('format')
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -391,8 +390,18 @@ let g:coc_global_extensions = [
   \ 'coc-java',
   \ 'coc-sh',
   \ 'coc-sql',
+  \ 'coc-vimlsp',
   \ 'coc-clangd'
   \ ]
+
+" ### Vim-endwise ###
+" Mappings are desabled to work properly with CoC
+let g:endwise_no_mappings = 1
+
+" 
+" ### Tagbar ###
+" nmap <silent> <F4> :TagbarToggle<CR>
+" let g:tagbar_autofocus = 1
 
 "------------
 " Keybindings
@@ -404,7 +413,7 @@ let mapleader=" "
 set backspace=indent,eol,start
 
 " Unbind the annoying 'Q' which in normal mode enters Ex mode
-nmap Q <Nop> 
+nmap Q <Nop>
 
 " Search results are centered
 nnoremap <silent> n nzz
@@ -423,28 +432,27 @@ vnoremap <silent> <C-h> :nohlsearch<cr>
 nnoremap <silent> <C-h> :nohlsearch<cr>
 
 " (Shift+)Tab (de)indents code
-inoremap <silent> <S-Tab> <C-d>
 vnoremap <silent> <Tab> >gv
 vnoremap <silent> <S-Tab> <gv
 nnoremap <silent> <Tab> >>_
 nnoremap <silent> <S-Tab> <<_
 
-" F4/F5 to move code lines/blocks up and down
-nnoremap <F4> :m .+1<CR>==
-nnoremap <F5> :m .-2<CR>==
-inoremap <F4> <Esc>:m .+1<CR>==gi
-inoremap <F5> <Esc>:m .-2<CR>==gi
-vnoremap <F4> :m '>+1<CR>gv=gv
-vnoremap <F5> :m '<-2<CR>gv=gv
-
-" Navigation through windows
-nnoremap <silent> <leader>h :wincmd h<CR>
-nnoremap <silent> <leader>j :wincmd j<CR>
-nnoremap <silent> <leader>k :wincmd k<CR>
-nnoremap <silent> <leader>l :wincmd l<CR>
+" C-k/C-j to move code lines/blocks up and down
+nnoremap <silent> <C-j> :m .+1<CR>==
+nnoremap <silent> <C-k> :m .-2<CR>==
+inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
+inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
+vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
 
 " Undotree toggle
-nnoremap <silent> <F7> :UndotreeToggle<CR>
+nnoremap <silent> U :UndotreeToggle<CR>
+
+" Clear undotree history
+" Callback function, so the key mappings only works on the undotree window
+function g:Undotree_CustomMap()
+    nmap <buffer> H <plug>UndotreeClearHistory
+endfunc
 
 " NERDTree toggle
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
@@ -452,24 +460,34 @@ nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 " Find and reveal a file in the NERDTree window
 nnoremap <silent> <C-f> :NERDTreeFind<CR>
 
-" Go to definition
-nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
-nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
+" Use [g and ]g to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Start ripgrep
-nnoremap <Leader>s :Rg<SPACE>
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Navigation between buffers
+nnoremap <silent> bl :bn<CR>
+nnoremap <silent> bh :bp<CR>
+
+" Close buffer
+nnoremap <silent> bc :bd<CR>
 
 " Navigate through tabs
-nnoremap <silent> tk :tabnew<CR>
-nnoremap <silent> tj :tabclose<CR>
+nnoremap <silent> tn :tabnew<CR>
+nnoremap <silent> tc :tabclose<CR>
 nnoremap <silent> tl :tabnext<CR>
 nnoremap <silent> th :tabprev<CR>
 
-" Callback function, so the key mappings only works on the undotree window
-function g:Undotree_CustomMap()
-    " Clear undotree history
-    nmap <buffer> H <plug>UndotreeClearHistory
-endfunc
+" Navigation through windows
+nnoremap <silent> <leader>h :wincmd h<CR>
+nnoremap <silent> <leader>j :wincmd j<CR>
+nnoremap <silent> <leader>k :wincmd k<CR>
+nnoremap <silent> <leader>l :wincmd l<CR>
 
 " Split window
 nnoremap <silent> <Leader>wh :sp<CR>
@@ -478,12 +496,17 @@ nnoremap <silent> <Leader>wv :vsp<CR>
 " Close window
 nnoremap <silent> <Leader>wc :wincmd c<CR>
 
+" Swap windows
+nnoremap <silent> <Leader>ws :wincmd R<CR>
+
 " Resize window
 noremap <silent> <Leader><Left> :vertical resize +5<CR>
 noremap <silent> <Leader><Right> :vertical resize -5<CR>
 noremap <silent> <Leader><Up> :resize +5<CR>
 noremap <silent> <Leader><Down> :resize -5<CR>
 noremap <silent> <Leader>= :wincmd =<CR>
+noremap <silent> <Leader>mv :wincmd _<CR>
+noremap <silent> <Leader>mh :wincmd \|<CR>
 
 " Open terminal window
 nnoremap <silent> <Leader>wt :terminal<CR>
@@ -495,10 +518,10 @@ tnoremap <Leader>wc <C-\><C-n>:q!<CR>
 tnoremap <ESC> <C-\><C-n>
 
 " Change window from vertical to horizontal
-map <Leader>w<Up> :call VerticalToHorizontal()<CR>
+map <silent> <Leader>w<Up> :call VerticalToHorizontal()<CR>
 
 " Change window from horizontal to vertical
-map <Leader>w<Down> :call HorizontalTovertical()<CR>
+map <silent> <Leader>w<Down> :call HorizontalTovertical()<CR>
 
 " Close NERDTree if it's open before flip window from vertical to horizontal and after that reopen it
 function g:VerticalToHorizontal()
@@ -507,6 +530,7 @@ function g:VerticalToHorizontal()
         execute ":wincmd" "t"
         execute ":wincmd" "H"
         execute ":NERDTree"
+        execute ":wincmd" "l"
     else
         execute ":wincmd" "t"
         execute ":wincmd" "H"
@@ -520,6 +544,7 @@ function g:HorizontalTovertical()
         execute ":wincmd" "t"
         execute ":wincmd" "K"
         execute ":NERDTree"
+        execute ":wincmd" "l"
     else
         execute ":wincmd" "t"
         execute ":wincmd" "K"
@@ -527,7 +552,38 @@ function g:HorizontalTovertical()
 endfunc
 
 " Fast edit '.vimrc' file
-nmap <leader>e :e! $MYVIMRC<CR>
+nmap <leader>rc :tabnew $MYVIMRC<CR>
 
 " remove trailing whitespaces
 command! FixWhiteSpace :%s/\s\+$//e
+
+" FZF keybindings
+nnoremap <Leader>fg :Rg<CR>
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>fh :History:<CR>
+nnoremap <Leader>fb :Buffers<CR>
+
+" Git
+" noremap <Leader>ga :Gwrite<CR>
+" noremap <Leader>gc :Gcommit<CR>
+" noremap <Leader>gsh :Gpush<CR>
+" noremap <Leader>gll :Gpull<CR>
+" noremap <Leader>gs :Gstatus<CR>
+" noremap <Leader>gb :Gblame<CR>
+" noremap <Leader>gd :Gvdiff<CR>
+" noremap <Leader>gr :Gremove<CR>
+
+" if executable('rg')
+"   let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+"   set grepprg=rg\ --vimgrep
+"   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+" endif
+ 
+"" Copy/Paste/Cut
+" if has('unnamedplus')
+"   set clipboard=unnamed,unnamedplus
+" endif
+
+" noremap YY "+y<CR>
+" noremap <leader>p "+gP<CR>
+" noremap XX "+x<CR>

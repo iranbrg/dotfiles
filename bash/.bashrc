@@ -2,3 +2,6 @@
 if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
+
+# Vim as the default editor
+export EDITOR=vim

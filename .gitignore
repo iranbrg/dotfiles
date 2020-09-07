@@ -1,0 +1,6 @@
+# Ignore everything inside .vim
+vim/.vim/*
+
+# But not these files/directories...
+!vim/.vim/after
+!vim/.vim/vimrc

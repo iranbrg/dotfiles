@@ -18,7 +18,7 @@ set laststatus=2
 set hidden
 
 " Enable mouse support
-set mouse=a
+set mouse+=a
 
 " To get rid of thing like --INSERT--
 set noshowmode
@@ -37,6 +37,9 @@ set t_Co=256
 
 " Always have the clipboard be the same as my regular clipboard
 set clipboard+=unnamedplus
+
+" The global path becomes the cwd (and any file can be found in its children)
+set path=.,**
 
 " Create the '.vim' folder if it doesn't exist
 if !isdirectory($HOME."/.vim")
@@ -136,6 +139,9 @@ Plug 'tpope/vim-endwise'
 " Linter
  Plug 'w0rp/ale'
 
+" Support for expanding HTML abbreviations like emmet
+Plug 'mattn/emmet-vim'
+
 " ### Files ###
 " Fuzzy finder and more
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -171,6 +177,9 @@ Plug 'chrisbra/csv.vim'
 " Displays the ctags-generated tags of the current file, ordered by their scope 
 " Plug 'majutsushi/tagbar'
 
+" Navigate seamlessly between vim and tmux splits 
+" Plugin 'christoomey/vim-tmux-navigator'
+
 " ### GUI ###
 " Color scheme
 Plug 'morhetz/gruvbox'
@@ -179,12 +188,15 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" Better Rainbow Parentheses 
+" Plug 'kien/rainbow_parentheses.vim'
+
+" Preview colours in source code while editing
+Plug 'ap/vim-css-color'
+
 " Adds file type icons and its colors (must be the last intalled plugin)
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
-
-" Support for expanding HTML abbreviations like emmet
-Plug 'mattn/emmet-vim'
 
 " Initialize plugin system
 call plug#end()
@@ -201,7 +213,7 @@ let g:gruvbox_contrast_dark = 'hard'
 
 " ### NERDTree ###
 " Automatically open when Vim starts up
-autocmd vimenter * NERDTree
+autocmd vimenter * NERDTreeFind
 
 " After automatically NERDTree is opened the cursor is moved to right window
 autocmd vimenter * wincmd l
@@ -212,6 +224,24 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" " sync open file with NERDTree
+" " Check if NERDTree is open or active
+" function! IsNERDTreeOpen()        
+"   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" endfunction
+
+" " Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" " file, and we're not in vimdiff
+" function! SyncTree()
+"   if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+"     NERDTreeFind
+"     wincmd p
+"   endif
+" endfunction
+
+" " Highlight currently open buffer in NERDTree
+" autocmd BufEnter * call SyncTree()
 
 " Show hidden files by default
 let NERDTreeShowHidden=1
@@ -341,7 +371,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
 " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 
 function! s:check_back_space() abort
@@ -355,12 +385,9 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
-" Add :Format command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Formatting selected code.
-xmap <leader>f <Plug>(coc-format-selected)
-nmap <leader>f <Plug>(coc-format-selected)
+" Formatting selected code
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -373,6 +400,9 @@ function! s:show_documentation()
   endif
 endfunction
 
+" Update signature help on jump placeholder
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
 " Automatically install extensions on server start
 let g:coc_global_extensions = [
   \ 'coc-yank',
@@ -381,6 +411,7 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-tabnine',
   \ 'coc-git',
+  \ 'coc-prettier',
   \ 'coc-html',
   \ 'coc-css',
   \ 'coc-tsserver',
@@ -391,6 +422,7 @@ let g:coc_global_extensions = [
   \ 'coc-sh',
   \ 'coc-sql',
   \ 'coc-vimlsp',
+  \ 'coc-yaml',
   \ 'coc-clangd'
   \ ]
 
@@ -398,7 +430,13 @@ let g:coc_global_extensions = [
 " Mappings are desabled to work properly with CoC
 let g:endwise_no_mappings = 1
 
-" 
+" ### rainbow_parentheses.vim ###
+" Always on
+" au VimEnter * RainbowParenthesesToggle
+" au Syntax * RainbowParenthesesLoadRound
+" au Syntax * RainbowParenthesesLoadSquare
+" au Syntax * RainbowParenthesesLoadBraces
+
 " ### Tagbar ###
 " nmap <silent> <F4> :TagbarToggle<CR>
 " let g:tagbar_autofocus = 1
@@ -434,8 +472,8 @@ nnoremap <silent> <C-h> :nohlsearch<cr>
 " (Shift+)Tab (de)indents code
 vnoremap <silent> <Tab> >gv
 vnoremap <silent> <S-Tab> <gv
-nnoremap <silent> <Tab> >>_
-nnoremap <silent> <S-Tab> <<_
+" nnoremap <silent> <Tab> >>_
+" nnoremap <silent> <S-Tab> <<_
 
 " C-k/C-j to move code lines/blocks up and down
 nnoremap <silent> <C-j> :m .+1<CR>==
@@ -451,7 +489,7 @@ nnoremap <silent> U :UndotreeToggle<CR>
 " Clear undotree history
 " Callback function, so the key mappings only works on the undotree window
 function g:Undotree_CustomMap()
-    nmap <buffer> H <plug>UndotreeClearHistory
+    nmap <silent> <buffer> H <plug>UndotreeClearHistory
 endfunc
 
 " NERDTree toggle
@@ -483,6 +521,13 @@ nnoremap <silent> tc :tabclose<CR>
 nnoremap <silent> tl :tabnext<CR>
 nnoremap <silent> th :tabprev<CR>
 
+" Tab navigation using the the leader key and number row
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+
 " Navigation through windows
 nnoremap <silent> <leader>h :wincmd h<CR>
 nnoremap <silent> <leader>j :wincmd j<CR>
@@ -512,7 +557,7 @@ noremap <silent> <Leader>mh :wincmd \|<CR>
 nnoremap <silent> <Leader>wt :terminal<CR>
 
 " Close terminal window
-tnoremap <Leader>wc <C-\><C-n>:q!<CR>
+tnoremap <silent> <Leader>wc <C-\><C-n>:q!<CR>
 
 " Enter terminal normal mode
 tnoremap <ESC> <C-\><C-n>
@@ -554,14 +599,20 @@ endfunc
 " Fast edit '.vimrc' file
 nmap <leader>rc :tabnew $MYVIMRC<CR>
 
-" remove trailing whitespaces
+" Command :FixWhiteSpace to remove trailing whitespaces
 command! FixWhiteSpace :%s/\s\+$//e
 
+" Command :Prettier to format current buffer
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Add :Format command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
 " FZF keybindings
-nnoremap <Leader>fg :Rg<CR>
-nnoremap <Leader>ff :Files<CR>
-nnoremap <Leader>fh :History:<CR>
-nnoremap <Leader>fb :Buffers<CR>
+nnoremap <silent> <Leader>fg :Rg<CR>
+nnoremap <silent> <Leader>ff :Files<CR>
+nnoremap <silent> <Leader>fh :History:<CR>
+nnoremap <silent> <Leader>fb :Buffers<CR>
 
 " Git
 " noremap <Leader>ga :Gwrite<CR>

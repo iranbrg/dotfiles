@@ -4,3 +4,4 @@ vim/.vim/*
 # But not these files/directories...
 !vim/.vim/after
 !vim/.vim/vimrc
+!vim/.vim/plugin

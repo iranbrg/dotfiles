@@ -14,10 +14,3 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:UndotreeToggle") && b:Undotr
 
 " Undotree toggle
 nnoremap <silent> <C-z> :UndotreeToggle<CR>
-
-" Clear undotree history
-" Callback function, so the key mappings only works on the undotree window
-function g:Undotree_CustomMap()
-    nmap <silent> <buffer> H <plug>UndotreeClearHistory
-endfunc
-

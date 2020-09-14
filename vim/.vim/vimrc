@@ -31,6 +31,9 @@ filetype plugin indent on
 " Improve smoothness of redrawing
 set ttyfast
 
+" Skip redrawing screen in some cases
+set lazyredraw
+
 " Enable folding
 " set foldmethod=marker
 set foldmethod=marker
@@ -132,7 +135,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 
 " Linter
- Plug 'w0rp/ale'
+ Plug 'sheerun/vim-polyglot'
 
 " Support for expanding HTML abbreviations like emmet
 Plug 'mattn/emmet-vim'

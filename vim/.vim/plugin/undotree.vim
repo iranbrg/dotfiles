@@ -13,7 +13,7 @@ let g:undotree_ShortIndicators=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:UndotreeToggle") && b:UndotreeToggle.isTabTree()) | q | endif
 
 " Undotree toggle
-nnoremap <silent> <Leader> u :UndotreeToggle<CR>
+nnoremap <silent> <C-z> :UndotreeToggle<CR>
 
 " Clear undotree history
 " Callback function, so the key mappings only works on the undotree window

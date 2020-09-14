@@ -35,8 +35,7 @@ set ttyfast
 " set foldmethod=marker
 set foldmethod=marker
 
-" Having longer updatetime (default is 4000 ms) leads to noticeable
-" delays and poor user experience
+" Longer updatetime (default is 4000ms) leads to noticeable delays
 set updatetime=300
 
 " Create the 'undodir' folder and its parents if they don't exist
@@ -188,7 +187,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Plug 'kien/rainbow_parentheses.vim'
 
 " Preview colours in source code while editing
-Plug 'ap/vim-css-color'
+Plug 'gorodinskiy/vim-coloresque'
 
 " Adds file type icons and its colors (must be the last intalled plugin)
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -202,6 +201,7 @@ call plug#end()
 " Keybindings
 "------------
 " {{{
+" ### General ###
 " Setting <Leader> key to spacebar
 let mapleader=" "
 
@@ -217,21 +217,22 @@ nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 
+" Ctrl+s to stop searching
+nnoremap <C-s> :nohlsearch<CR>
+
 " Stop indenting when text is pasted
 set pastetoggle=<F2>
 
 " Toggle relative numbering
 nnoremap <silent> <F3> :set rnu!<CR>
 
-" Ctrl+h to stop searching
-vnoremap <silent> <C-h> :nohlsearch<cr>
-nnoremap <silent> <C-h> :nohlsearch<cr>
-
 " (Shift+)Tab (de)indents code
-vnoremap <silent> <Tab> >gv
-vnoremap <silent> <S-Tab> <gv
-" nnoremap <silent> <Tab> >>_
-" nnoremap <silent> <S-Tab> <<_
+nnoremap <Tab> >>_
+nnoremap <S-Tab> <<_
+" <S-Tab> isn't work in insert mode as expected and I don't know how to solve it
+" inoremap <S-Tab> <C-d>
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " C-k/C-j to move code lines/blocks up and down
 nnoremap <silent> <C-j> :m .+1<CR>==
@@ -241,31 +242,47 @@ inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
 vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
 
+" Fast edit '.vimrc' file
+nmap <Leader>rc :tabnew $MYVIMRC<CR>
+
+" " Copy/Paste/Cut
+" if has('unnamedplus')
+"     " Always have the clipboard be the same as my regular clipboard
+"     set clipboard=unnamed,unnamedplus
+" else
+"     noremap YY "+y<CR>
+"     noremap <Leader>p "+gP<CR>
+"     noremap XX "+x<CR>
+" endif
+
+" ### Buffers ###
 " Navigation between buffers
-nnoremap <silent> <leader>bl :bn<CR>
-nnoremap <silent> <leader>bh :bp<CR>
+nnoremap <silent> <Leader>bl :bn<CR>
+nnoremap <silent> <Leader>bh :bp<CR>
 
 " Close buffer
-nnoremap <silent> <leader>bc :bd<CR>
+nnoremap <silent> <Leader>bc :bd<CR>
 
+" ### Tabs ###
 " Navigate through tabs
-nnoremap <silent> tn :tabnew<CR>
-nnoremap <silent> tc :tabclose<CR>
-nnoremap <silent> tl :tabnext<CR>
-nnoremap <silent> th :tabprev<CR>
+nnoremap <silent> <Leader>tn :tabnew<CR>
+nnoremap <silent> <Leader>tc :tabclose<CR>
+nnoremap <silent> <Leader>tl :tabnext<CR>
+nnoremap <silent> <Leader>th :tabprev<CR>
 
 " Tab navigation using the the leader key and number row
-nnoremap <leader>1 1gt
-nnoremap <leader>2 2gt
-nnoremap <leader>3 3gt
-nnoremap <leader>4 4gt
-nnoremap <leader>5 5gt
+nnoremap <Leader>1 1gt
+nnoremap <Leader>2 2gt
+nnoremap <Leader>3 3gt
+nnoremap <Leader>4 4gt
+nnoremap <Leader>5 5gt
 
+" ### Windows ###
 " Navigation through windows
-nnoremap <silent> <leader>h :wincmd h<CR>
-nnoremap <silent> <leader>j :wincmd j<CR>
-nnoremap <silent> <leader>k :wincmd k<CR>
-nnoremap <silent> <leader>l :wincmd l<CR>
+nnoremap <silent> <Leader>h :wincmd h<CR>
+nnoremap <silent> <Leader>j :wincmd j<CR>
+nnoremap <silent> <Leader>k :wincmd k<CR>
+nnoremap <silent> <Leader>l :wincmd l<CR>
 
 " Split window
 nnoremap <silent> <Leader>wh :sp<CR>
@@ -286,20 +303,8 @@ noremap <silent> <Leader>= :wincmd =<CR>
 noremap <silent> <Leader>mv :wincmd _<CR>
 noremap <silent> <Leader>mh :wincmd \|<CR>
 
-" Open terminal window
-nnoremap <silent> <Leader>wt :terminal<CR>
-
-" Close terminal window
-tnoremap <silent> <Leader>wc <C-\><C-n>:q!<CR>
-
-" Enter terminal normal mode
-tnoremap <ESC> <C-\><C-n>
-
 " Change window from vertical to horizontal
 map <silent> <Leader>w<Up> :call VerticalToHorizontal()<CR>
-
-" Change window from horizontal to vertical
-map <silent> <Leader>w<Down> :call HorizontalTovertical()<CR>
 
 " Close NERDTree if it's open before flip window from vertical to horizontal and after that reopen it
 function g:VerticalToHorizontal()
@@ -315,6 +320,9 @@ function g:VerticalToHorizontal()
     endif
 endfunc
 
+" Change window from horizontal to vertical
+map <silent> <Leader>w<Down> :call HorizontalTovertical()<CR>
+
 " Close NERDTree if it's open before flip window from horizontal to vertical and after that reopen it
 function g:HorizontalTovertical()
     if exists("g:NERDTree") && g:NERDTree.IsOpen()
@@ -329,19 +337,17 @@ function g:HorizontalTovertical()
     endif
 endfunc
 
-" Fast edit '.vimrc' file
-nmap <leader>rc :tabnew $MYVIMRC<CR>
+" ### Terminal ###
+" Open terminal window
+nnoremap <silent> <Leader>wt :terminal<CR>
 
-" Always have the clipboard be the same as my regular clipboard
-"" Copy/Paste/Cut
-" if has('unnamedplus')
-"     set clipboard=unnamed,unnamedplus
-" else
-"     noremap YY "+y<CR>
-"     noremap <leader>p "+gP<CR>
-"     noremap XX "+x<CR>
-" endif
+" Close terminal window
+tnoremap <silent> <Leader>wc <C-\><C-n>:q!<CR>
 
+" Enter terminal normal mode
+tnoremap <ESC> <C-\><C-n>
+
+" ### Commands ###
 " Command :FixWhiteSpace to remove trailing whitespaces
 command! FixWhiteSpace :%s/\s\+$//e
 " }}}

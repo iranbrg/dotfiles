@@ -11,6 +11,15 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Show hidden files by default
+let NERDTreeShowHidden=1
+
+" Resize NERDTree window
+let g:NERDTreeWinSize=25
+
+" Don't show messages above file tree
+let NERDTreeMinimalUI=1
+
 " " sync open file with NERDTree
 " " Check if NERDTree is open or active
 " function! IsNERDTreeOpen()
@@ -28,15 +37,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " " Highlight currently open buffer in NERDTree
 " autocmd BufEnter * call SyncTree()
-
-" Show hidden files by default
-let NERDTreeShowHidden=1
-
-" Resize NERDTree window
-let g:NERDTreeWinSize=25
-
-" Don't show messages above file tree
-let NERDTreeMinimalUI=1
 
 " NERDTree toggle
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>

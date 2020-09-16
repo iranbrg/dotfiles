@@ -21,3 +21,6 @@ nnoremap <silent> <Leader>fb :Buffers<CR>
 nnoremap <silent> <Leader>fc :Commits<CR>
 nnoremap <silent> <Leader>fr :Rg<CR>
 nnoremap <silent> <Leader>fg :GFiles<CR>
+
+" Search the symbol below the cursor accross the projects files
+nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>

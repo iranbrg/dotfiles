@@ -221,7 +221,7 @@ nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 
 " Ctrl+s to stop searching
-nnoremap <C-s> :nohlsearch<CR>
+nnoremap <silent> <C-s> :nohlsearch<CR>
 
 " Stop indenting when text is pasted
 set pastetoggle=<F2>

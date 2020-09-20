@@ -211,8 +211,13 @@ let mapleader=" "
 " Make backspace behave more reasonably, in that you can backspace over anything
 set backspace=indent,eol,start
 
-" Unbind the annoying 'Q' which in normal mode enters Ex mode
+" Unbind the annoying 'Q' which in normal mode enters Ex mode and sometimes
+" i forget to disable capslock what masses everything up in
+" normal mode
 nmap Q <Nop>
+nmap J :echo "Maybe capslock is enabled, disable it."<CR>
+nmap H :echo "Maybe capslock is enabled, disable it."<CR>
+nmap L :echo "Maybe capslock is enabled, disable it."<CR>
 
 " Search results are centered
 nnoremap <silent> n nzz
@@ -295,6 +300,7 @@ nnoremap <silent> <Leader>wv :vsp<CR>
 nnoremap <silent> <Leader>wc :wincmd c<CR>
 
 " Swap windows
+" TODO(#1): close NERDTree if it is open b4 swapping windows and reopen it after that.
 nnoremap <silent> <Leader>ws :wincmd R<CR>
 
 " Resize window
@@ -302,7 +308,12 @@ noremap <silent> <Leader><Left> :vertical resize +5<CR>
 noremap <silent> <Leader><Right> :vertical resize -5<CR>
 noremap <silent> <Leader><Up> :resize +5<CR>
 noremap <silent> <Leader><Down> :resize -5<CR>
+
+" Equalize windows width or height
 noremap <silent> <Leader>= :wincmd =<CR>
+
+" Maximize window's width or height 
+" TODO(#2): close NERDTree if it is open b4 maximizing window and reopen it after that.
 noremap <silent> <Leader>mv :wincmd _<CR>
 noremap <silent> <Leader>mh :wincmd \|<CR>
 
@@ -349,6 +360,12 @@ tnoremap <silent> <Leader>wc <C-\><C-n>:q!<CR>
 
 " Enter terminal normal mode
 tnoremap <ESC> <C-\><C-n>
+
+" Replace all occurences of selection
+vnoremap <leader>ra y:%s/<C-r><C-r>"//g<Left><Left>
+
+" Find/replace in line selection
+xnoremap <leader>rl :s//g<Left><Left>
 
 " ### Commands ###
 " Command :FixWhiteSpace to remove trailing whitespaces

@@ -15,7 +15,7 @@ endif
 " endif
 
 nnoremap <silent> <Leader>ff :Files<CR>
-nnoremap <silent> <Leader>fh :History:<CR>
+nnoremap <silent> q: :History:<CR>
 nnoremap <silent> <Leader>fs :History/<CR>
 nnoremap <silent> <Leader>fb :Buffers<CR>
 nnoremap <silent> <Leader>fc :Commits<CR>

@@ -86,7 +86,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Search the symbol below the cursor accross the projects files
-nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>rr :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 " Command :Prettier to format current buffer
 command! -nargs=0 Prettier :CocCommand prettier.formatFile

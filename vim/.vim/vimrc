@@ -34,10 +34,6 @@ set ttyfast
 " Skip redrawing screen in some cases
 set lazyredraw
 
-" Enable folding
-" set foldmethod=marker
-set foldmethod=marker
-
 " Longer updatetime (default is 4000ms) leads to noticeable delays
 set updatetime=300
 
@@ -192,6 +188,9 @@ Plug 'vim-airline/vim-airline-themes'
 " Preview colours in source code while editing
 Plug 'ap/vim-css-color'
 
+" Start screen for Vim
+Plug 'mhinz/vim-startify'
+
 " Adds file type icons and its colors (must be the last intalled plugin)
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
@@ -237,7 +236,7 @@ nnoremap <silent> <F3> :set rnu!<CR>
 " (Shift+)Tab (de)indents code
 nnoremap <Tab> >>_
 nnoremap <S-Tab> <<_
-" <S-Tab> isn't work in insert mode as expected and I don't know how to solve it
+" <S-Tab> doesn't work in insert mode as expected and I don't know how to solve it. Maybe S-Tab is already mapped
 " inoremap <S-Tab> <C-d>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
@@ -252,6 +251,12 @@ vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
 
 " Fast edit '.vimrc' file
 nmap <Leader>rc :tabnew $MYVIMRC<CR>
+
+" Replace all occurences of selection
+vnoremap <leader>ra y:%s/<C-r><C-r>"//g<Left><Left>
+
+" Find/replace in line selection
+xnoremap <leader>rl :s//g<Left><Left>
 
 " " Copy/Paste/Cut
 " if has('unnamedplus')
@@ -353,19 +358,13 @@ endfunc
 
 " ### Terminal ###
 " Open terminal window
-nnoremap <silent> <Leader>wt :terminal<CR>
+nnoremap <silent> <Leader>wt :terminal<CR><C-\><C-n>:resize 10<CR>i
 
 " Close terminal window
 tnoremap <silent> <Leader>wc <C-\><C-n>:q!<CR>
 
 " Enter terminal normal mode
 tnoremap <ESC> <C-\><C-n>
-
-" Replace all occurences of selection
-vnoremap <leader>ra y:%s/<C-r><C-r>"//g<Left><Left>
-
-" Find/replace in line selection
-xnoremap <leader>rl :s//g<Left><Left>
 
 " ### Commands ###
 " Command :FixWhiteSpace to remove trailing whitespaces

@@ -1,3 +1,13 @@
+" To get rid of the original statusline
+set noshowmode
+set noshowcmd
+
+" Always show tabs
+set showtabline=2
+
+" Using a Theme
+let g:airline_theme='tomorrow'
+
 " Disable setting the 'statusline' option
 let g:airline_skip_empty_sections = 1
 

@@ -18,10 +18,6 @@ set ttymouse=sgr
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
 
-" To get rid of the original statusline
-set noshowmode
-set noshowcmd
-
 " Give more space for displaying messages.
 set cmdheight=2
 
@@ -302,7 +298,16 @@ nnoremap <silent> <Leader>wh :sp<CR>
 nnoremap <silent> <Leader>wv :vsp<CR>
 
 " Close window
-nnoremap <silent> <Leader>wc :wincmd c<CR>
+nnoremap <silent> <Leader>wc :call CloseWindow()<CR>
+
+function! CloseWindow()
+    if &buftype == 'terminal'
+        execute ":q!"
+        call feedkeys("\<CR>")
+    else
+        execute ":wincmd" "c"
+    endif
+endfunction
 
 " Swap windows
 " TODO(#1): close NERDTree if it is open b4 swapping windows and reopen it after that.

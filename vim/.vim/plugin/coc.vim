@@ -106,6 +106,22 @@ nnoremap <leader>rr :CocSearch <C-R>=expand("<cword>")<CR><CR>
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
 
+" navigate chunks of current buffer
+nmap [h <Plug>(coc-git-prevchunk)
+nmap ]h <Plug>(coc-git-nextchunk)
+
+" Show chunk diff at current position
+nmap <Leader>hp <Plug>(coc-git-chunkinfo)
+
+" Open current line in browser (remote repository)
+nmap <Leader>hb :CocCommand git.browserOpen<CR>
+
+" Stage current chunk.
+nmap <Leader>hs :CocCommand git.chunkStage<CR>
+
+" Undo current chunk.
+nmap <Leader>hu :CocCommand git.chunkUndo<CR>
+
 " Command :Prettier to format current buffer
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 

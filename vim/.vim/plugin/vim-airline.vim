@@ -22,6 +22,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " Change how columns are displayed for the csv extension
 let g:airline#extensions#csv#column_display = 'Name'
 
+" If not set to 1, vim-airline will not consider to use coc-git for the hunks extension.
+let g:airline#extensions#hunks#coc_git = 1
+
 " Invert the order that branch and hunks appear in the statusline
 autocmd VimEnter * let g:airline_section_b = airline#section#create_left(['branch', 'hunks'])
 

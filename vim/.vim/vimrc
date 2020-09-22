@@ -155,7 +155,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'xuyuanp/nerdtree-git-plugin'
 
 " Shows which lines have been added, modified, or removed and more
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 
 " ### Utilities ###
 " Multiple cursors

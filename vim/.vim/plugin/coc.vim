@@ -34,6 +34,7 @@ let g:coc_global_extensions = [
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 
@@ -43,6 +44,8 @@ function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+let g:coc_snippet_next = '<tab>'
 
 " Use <C-Space> to trigger completion.
 if has('nvim')
@@ -87,6 +90,21 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Search the symbol below the cursor accross the projects files
 nnoremap <leader>rr :CocSearch <C-R>=expand("<cword>")<CR><CR>
+
+" Use <C-l> for trigger snippet expand.
+" imap <C-l> <Plug>(coc-snippets-expand)
+ 
+" Use <C-j> for select text for visual placeholder of snippet.
+" vmap <C-j> <Plug>(coc-snippets-select)
+ 
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+" let g:coc_snippet_next = '<c-j>'
+ 
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+" let g:coc_snippet_prev = '<c-k>'
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
 
 " Command :Prettier to format current buffer
 command! -nargs=0 Prettier :CocCommand prettier.formatFile

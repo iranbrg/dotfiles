@@ -126,11 +126,14 @@ Plug 'tpope/vim-surround'
 " Wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
 Plug 'tpope/vim-endwise'
 
-" Linter
+" Syntax for various filetypes
  Plug 'sheerun/vim-polyglot'
 
 " Support for expanding HTML abbreviations like emmet
 Plug 'mattn/emmet-vim'
+
+" Snippets
+Plug 'honza/vim-snippets'
 
 " ### Files ###
 " Fuzzy finder and more
@@ -144,6 +147,9 @@ Plug 'scrooloose/nerdtree'
 " ### Git ###
 " Git integration
 Plug 'tpope/vim-fugitive'
+
+" Enables :Gbrowse from fugitive.vim to open GitHub URLs.
+Plug 'tpope/vim-rhubarb'
 
 " Git status in NERDTree explorer
 Plug 'xuyuanp/nerdtree-git-plugin'
@@ -238,12 +244,14 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " C-k/C-j to move code lines/blocks up and down
-nnoremap <silent> <C-j> :m .+1<CR>==
+" execute "set <M-j>=\ej"
+" execute "set <M-k>=\ek"
 nnoremap <silent> <C-k> :m .-2<CR>==
-inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
+nnoremap <silent> <C-j> :m .+1<CR>==
 inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
-vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
+inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
 vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
+vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
 
 " Fast edit '.vimrc' file
 nmap <Leader>rc :tabnew $MYVIMRC<CR>

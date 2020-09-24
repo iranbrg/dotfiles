@@ -15,10 +15,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeShowHidden=1
 
 " Resize NERDTree window
-let g:NERDTreeWinSize=25
+let g:NERDTreeWinSize=30
 
 " Don't show messages above file tree
 let NERDTreeMinimalUI=1
+
+" let g:NERDTreeShowBookmarks=1
+" let g:nerdtree_tabs_focus_on_files=1
+" let g:NERDTreeChDirMode=2
 
 " " sync open file with NERDTree
 " " Check if NERDTree is open or active

@@ -1,3 +1,6 @@
+ " Disable default startup message
+set shortmess+=I
+
 " Once a session is loaded, it gets saved automatically when Vim is quit
 let g:startify_session_persistence = 1
 
@@ -52,11 +55,11 @@ autocmd User Startified setlocal cursorline
  " endif
 
 let g:startify_lists = [
-      \ { 'type': 'files',     'header': ['   Last Files']            },
-      \ { 'type': 'dir',       'header': ['   Current Directory '.''.getcwd()] },
-      \ { 'type': 'sessions',  'header': ['   Sessions']       },
-      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ { 'type': 'files',     'header': ['    Last Files']            },
+      \ { 'type': 'dir',       'header': ['    Current Directory '.''.getcwd()] },
+      \ { 'type': 'sessions',  'header': ['    Sessions']       },
+      \ { 'type': 'bookmarks', 'header': ['    Bookmarks']      },
+      \ { 'type': 'commands',  'header': ['    Commands']       },
       \ ]
 
 let g:startify_bookmarks = [

@@ -14,6 +14,7 @@ set hidden
 " Enable mouse support
 set mouse+=a
 set ttymouse=sgr
+" set mousemodel=popup
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
@@ -35,6 +36,10 @@ set updatetime=300
 
 " if (has("termguicolors"))
 "  set termguicolors
+" endif
+
+" if !has('gui_running')
+"   set t_Co=256
 " endif
 
 " Create the 'undodir' folder and its parents if they don't exist
@@ -264,17 +269,18 @@ nmap <Leader>rc :tabnew $MYVIMRC<CR>
 vnoremap <leader>ra y:%s/<C-r><C-r>"//g<Left><Left>
 
 " Find/replace in line selection
-xnoremap <leader>rl :s//g<Left><Left>
+" xnoremap <leader>rl :s//g<Left><Left>
+vnoremap <leader>rl y:s/<C-r><C-r>"//g<Left><Left>
 
-" " Copy/Paste/Cut
+" Copy/Paste/Cut
 " if has('unnamedplus')
-"     " Always have the clipboard be the same as my regular clipboard
-"     set clipboard=unnamed,unnamedplus
-" else
-"     noremap YY "+y<CR>
-"     noremap <Leader>p "+gP<CR>
-"     noremap XX "+x<CR>
+    " Always have the clipboard be the same as my regular clipboard
+"   set clipboard=unnamed,unnamedplus
 " endif
+
+" noremap YY "+y<CR>
+" noremap <leader>p "+gP<CR>
+" noremap XX "+x<CR>
 
 " ### Buffers ###
 " Navigation between buffers
@@ -290,6 +296,9 @@ nnoremap <silent> <Leader>tn :tabnew<CR>
 nnoremap <silent> <Leader>tc :tabclose<CR>
 nnoremap <silent> <Leader>tl :tabnext<CR>
 nnoremap <silent> <Leader>th :tabprev<CR>
+" nnoremap <Tab> gt
+" nnoremap <S-Tab> gT
+" nnoremap <silent> <S-t> :tabnew<CR>
 
 " Tab navigation using the the leader key and number row
 nnoremap <Leader>1 1gt
@@ -322,7 +331,7 @@ function! CloseWindow()
 endfunction
 
 " Swap windows
-" TODO(#1): close NERDTree if it is open b4 swapping windows and reopen it after that.
+" TODO: close NERDTree if it is open b4 swapping windows and reopen it after that.
 nnoremap <silent> <Leader>ws :wincmd R<CR>
 
 " Resize window
@@ -335,7 +344,7 @@ noremap <silent> <Leader><Down> :resize -5<CR>
 noremap <silent> <Leader>= :wincmd =<CR>
 
 " Maximize window's width or height 
-" TODO(#2): close NERDTree if it is open b4 maximizing window and reopen it after that.
+" TODO: close NERDTree if it is open b4 maximizing window and reopen it after that.
 noremap <silent> <Leader>mv :wincmd _<CR>
 noremap <silent> <Leader>mh :wincmd \|<CR>
 

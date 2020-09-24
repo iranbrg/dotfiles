@@ -13,4 +13,4 @@ let g:undotree_ShortIndicators=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:UndotreeToggle") && b:UndotreeToggle.isTabTree()) | q | endif
 
 " Undotree toggle
-nnoremap <silent> <C-z> :UndotreeToggle<CR>
+nnoremap <silent> <Leader>u :UndotreeToggle<CR>

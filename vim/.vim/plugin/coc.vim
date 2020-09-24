@@ -10,12 +10,12 @@ autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 " Automatically install extensions on server start
 let g:coc_global_extensions = [
   \ 'coc-yank',
-  \ 'coc-snippets',
   \ 'coc-highlight',
   \ 'coc-pairs',
   \ 'coc-tabnine',
   \ 'coc-git',
   \ 'coc-prettier',
+  \ 'coc-snippets',
   \ 'coc-html',
   \ 'coc-css',
   \ 'coc-tsserver',
@@ -89,7 +89,10 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Search the symbol below the cursor accross the projects files
-nnoremap <leader>rr :CocSearch <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>rs :CocSearch <C-R>=expand("<cword>")<CR><CR>
+
+" Open yank list, '--normal' means open list on normal mode.
+nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
 
 " Use <C-l> for trigger snippet expand.
 " imap <C-l> <Plug>(coc-snippets-expand)

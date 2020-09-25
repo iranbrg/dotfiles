@@ -55,8 +55,8 @@ autocmd User Startified setlocal cursorline
  " endif
 
 let g:startify_lists = [
-      \ { 'type': 'files',     'header': ['    Last Files']            },
-      \ { 'type': 'dir',       'header': ['    Current Directory '.''.getcwd()] },
+      \ { 'type': 'files',     'header': ['    Recent Files']            },
+      \ { 'type': 'dir',       'header': ['    Recent Files In Current Directory '.''.getcwd()] },
       \ { 'type': 'sessions',  'header': ['    Sessions']       },
       \ { 'type': 'bookmarks', 'header': ['    Bookmarks']      },
       \ { 'type': 'commands',  'header': ['    Commands']       },

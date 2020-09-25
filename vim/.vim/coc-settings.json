@@ -1,0 +1,6 @@
+{
+  "diagnostic.virtualText": true,
+  "codeLens.enable": true,
+
+  "yank.enableCompletion": false
+}

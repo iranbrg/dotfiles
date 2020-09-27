@@ -34,13 +34,13 @@ set lazyredraw
 " Longer updatetime (default is 4000ms) leads to noticeable delays
 set updatetime=300
 
-" if (has("termguicolors"))
-"  set termguicolors
-" endif
+if (has("termguicolors"))
+ set termguicolors
+endif
 
-" if !has('gui_running')
-"   set t_Co=256
-" endif
+if !has('gui_running')
+  set t_Co=256
+endif
 
 " Create the 'undodir' folder and its parents if they don't exist
 if !isdirectory($HOME."/.vim/undodir")

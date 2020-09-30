@@ -13,14 +13,9 @@ set hidden
 
 " Enable mouse support
 set mouse+=a
-set ttymouse=sgr
-" set mousemodel=popup
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
-
-" Give more space for displaying messages.
-set cmdheight=2
 
 " Load filetype-specific indent and plugin files
 filetype plugin indent on
@@ -33,14 +28,6 @@ set lazyredraw
 
 " Longer updatetime (default is 4000ms) leads to noticeable delays
 set updatetime=300
-
-if (has("termguicolors"))
- set termguicolors
-endif
-
-if !has('gui_running')
-  set t_Co=256
-endif
 
 " Create the 'undodir' folder and its parents if they don't exist
 if !isdirectory($HOME."/.vim/undodir")
@@ -136,7 +123,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 
 " Syntax for various filetypes
- Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
 " Support for expanding HTML abbreviations like emmet
 Plug 'mattn/emmet-vim'
@@ -162,9 +149,6 @@ Plug 'tpope/vim-rhubarb'
 
 " Git status in NERDTree explorer
 Plug 'xuyuanp/nerdtree-git-plugin'
-
-" Shows which lines have been added, modified, or removed and more
-" Plug 'airblade/vim-gitgutter'
 
 " ### Utilities ###
 " Multiple cursors
@@ -343,7 +327,7 @@ noremap <silent> <Leader><Down> :resize -5<CR>
 " Equalize windows width or height
 noremap <silent> <Leader>= :wincmd =<CR>
 
-" Maximize window's width or height 
+" Maximize window's width or height
 " TODO: close NERDTree if it is open b4 maximizing window and reopen it after that.
 noremap <silent> <Leader>mv :wincmd _<CR>
 noremap <silent> <Leader>mh :wincmd \|<CR>
@@ -394,5 +378,6 @@ tnoremap <ESC> <C-\><C-n>
 
 " ### Commands ###
 " Command :FixWhiteSpace to remove trailing whitespaces
+" TODO: Add a :noh at the final to stop highlighting spaces.
 command! FixWhiteSpace :%s/\s\+$//e
 " }}}

@@ -1,4 +1,4 @@
-" Don't pass messages to 'ins-completion-menu'
+" Don't pass messages to |ins-completion-menu|
 set shortmess+=c
 
 " Highlight the symbol and its references when holding the cursor.
@@ -9,6 +9,7 @@ autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
 " Automatically install extensions on server start
 let g:coc_global_extensions = [
+  \ 'coc-explorer',
   \ 'coc-yank',
   \ 'coc-highlight',
   \ 'coc-pairs',
@@ -94,18 +95,6 @@ nnoremap <leader>rs :CocSearch <C-R>=expand("<cword>")<CR><CR>
 " Open yank list, '--normal' means open list on normal mode.
 nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
 
-" Use <C-l> for trigger snippet expand.
-" imap <C-l> <Plug>(coc-snippets-expand)
- 
-" Use <C-j> for select text for visual placeholder of snippet.
-" vmap <C-j> <Plug>(coc-snippets-select)
- 
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-" let g:coc_snippet_next = '<c-j>'
- 
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-" let g:coc_snippet_prev = '<c-k>'
-
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
 
@@ -124,6 +113,8 @@ nmap <Leader>hs :CocCommand git.chunkStage<CR>
 
 " Undo current chunk.
 nmap <Leader>hu :CocCommand git.chunkUndo<CR>
+
+nmap <C-b> :CocCommand explorer<CR>
 
 " Command :Prettier to format current buffer
 command! -nargs=0 Prettier :CocCommand prettier.formatFile

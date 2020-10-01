@@ -14,4 +14,4 @@ let g:indentLine_fileTypeExclude = ['text']
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
 
 " Disabled in these buffer names (specified by regex)
-let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
+let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*', '.*CoC.*']

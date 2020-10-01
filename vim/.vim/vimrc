@@ -111,7 +111,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Text alignment
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
 
 " Comment stuff out
 Plug 'tpope/vim-commentary'
@@ -120,7 +120,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 
 " Wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
-Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-endwise'
 
 " Syntax for various filetypes
 Plug 'sheerun/vim-polyglot'
@@ -131,14 +131,17 @@ Plug 'mattn/emmet-vim'
 " Snippets
 Plug 'honza/vim-snippets'
 
+" JSON syntax (comment highlighting especially)
+Plug 'kevinoid/vim-jsonc'
+
 " ### Files ###
 " Fuzzy finder and more
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 
 " Tree explorer
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 
 " ### Git ###
 " Git integration
@@ -148,12 +151,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
 " Git status in NERDTree explorer
-Plug 'xuyuanp/nerdtree-git-plugin'
+" Plug 'xuyuanp/nerdtree-git-plugin'
 
 " ### Utilities ###
-" Multiple cursors
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-
 " Undo history visualizer
 Plug 'mbbill/undotree'
 
@@ -187,7 +187,7 @@ Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
 
 " Adds file type icons and its colors (must be the last intalled plugin)
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 
 " Initialize plugin system

@@ -1,3 +1,2 @@
 " Enable folding
-set foldmethod=marker
-
+setlocal foldmethod=marker

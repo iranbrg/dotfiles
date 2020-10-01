@@ -46,8 +46,6 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_snippet_next = '<tab>'
-
 " Use <C-Space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <C-Space> coc#refresh()
@@ -58,8 +56,7 @@ endif
 " Use <CR> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
 " <CR> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-inoremap <silent><expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -89,11 +86,11 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Search the symbol below the cursor accross the projects files
+" Search the symbol below the cursor acCRoss the projects files
 nnoremap <leader>rs :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 " Open yank list, '--normal' means open list on normal mode.
-nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
+nnoremap <silent> <space>y  :<C-u>CocList --normal yank<CR>
 
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)

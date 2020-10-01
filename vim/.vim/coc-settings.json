@@ -7,7 +7,7 @@
     // "diagnostic.warningSign": " ",
     // "diagnostic.infoSign": "",
     // "diagnostic.hintSign": " ",
-
+    
     // explorer
     "explorer.width": 30,
     "explorer.icon.enableNerdfont": true,

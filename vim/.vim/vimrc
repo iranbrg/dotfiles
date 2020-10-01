@@ -110,19 +110,16 @@ call plug#begin('~/.vim/plugged')
 " Code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Text alignment
-" Plug 'godlygeek/tabular'
-
 " Comment stuff out
 Plug 'tpope/vim-commentary'
 
 " Easily delete, change and add surroundings in pairs.
 Plug 'tpope/vim-surround'
 
-" Wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
-" Plug 'tpope/vim-endwise'
+" Display the indention levels
+Plug 'yggdroot/indentline'
 
-" Syntax for various filetypes
+" Syntax and indentation support for various filetypes
 Plug 'sheerun/vim-polyglot'
 
 " Support for expanding HTML abbreviations like emmet
@@ -134,14 +131,14 @@ Plug 'honza/vim-snippets'
 " JSON syntax (comment highlighting especially)
 Plug 'kevinoid/vim-jsonc'
 
+" A filetype plugin for csv files
+Plug 'chrisbra/csv.vim'
+
 " ### Files ###
 " Fuzzy finder and more
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'airblade/vim-rooter'
-
-" Tree explorer
-" Plug 'scrooloose/nerdtree'
+Plug 'airblade/vim-rooter'
 
 " ### Git ###
 " Git integration
@@ -150,18 +147,9 @@ Plug 'tpope/vim-fugitive'
 " Enables :Gbrowse from fugitive.vim to open GitHub URLs.
 Plug 'tpope/vim-rhubarb'
 
-" Git status in NERDTree explorer
-" Plug 'xuyuanp/nerdtree-git-plugin'
-
 " ### Utilities ###
 " Undo history visualizer
 Plug 'mbbill/undotree'
-
-" Display the indention levels
-Plug 'yggdroot/indentline'
-
-" A filetype plugin for csv files
-Plug 'chrisbra/csv.vim'
 
 " Displays the ctags-generated tags of the current file, ordered by their scope
 " Plug 'majutsushi/tagbar'
@@ -177,9 +165,6 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Colored brackets
-" Plug 'kien/rainbow_parentheses.vim'
-
 " Preview colours in source code while editing
 Plug 'ap/vim-css-color'
 
@@ -187,7 +172,6 @@ Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
 
 " Adds file type icons and its colors (must be the last intalled plugin)
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 
 " Initialize plugin system

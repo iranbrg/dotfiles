@@ -116,9 +116,6 @@ Plug 'tpope/vim-commentary'
 " Easily delete, change and add surroundings in pairs.
 Plug 'tpope/vim-surround'
 
-" Display the indention levels
-Plug 'yggdroot/indentline'
-
 " Syntax and indentation support for various filetypes
 Plug 'sheerun/vim-polyglot'
 
@@ -220,15 +217,16 @@ nnoremap <S-Tab> <<_
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-" C-k/C-j to move code lines/blocks up and down
+" C-k/C-j to move code lines/blocks up and down (find a way to make it work
+" with the Alt key rather than Ctrl)
 " execute "set <M-j>=\ej"
 " execute "set <M-k>=\ek"
-nnoremap <silent> <C-k> :m .-2<CR>==
-nnoremap <silent> <C-j> :m .+1<CR>==
-inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
-inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
-vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
-vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
+" nnoremap <silent> <C-k> :m .-2<CR>==
+" nnoremap <silent> <C-j> :m .+1<CR>==
+" inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
+" inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
+" vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
+" vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
 
 " Fast edit '.vimrc' file
 nmap <Leader>rc :tabnew $MYVIMRC<CR>
@@ -277,17 +275,17 @@ nnoremap <Leader>5 5gt
 
 " ### Windows ###
 " Navigation through windows
-nnoremap <silent> <Leader>h :wincmd h<CR>
-nnoremap <silent> <Leader>j :wincmd j<CR>
-nnoremap <silent> <Leader>k :wincmd k<CR>
-nnoremap <silent> <Leader>l :wincmd l<CR>
+nnoremap <silent> <C-h> :wincmd h<CR>
+nnoremap <silent> <C-j> :wincmd j<CR>
+nnoremap <silent> <C-k> :wincmd k<CR>
+nnoremap <silent> <C-l> :wincmd l<CR>
 
 " Split window
-nnoremap <silent> <Leader>wh :sp<CR>
-nnoremap <silent> <Leader>wv :vsp<CR>
+nnoremap <silent> <C-w>- :sp<CR>
+nnoremap <silent> <C-w>\| :vsp<CR>
 
 " Close window
-nnoremap <silent> <Leader>wc :call CloseWindow()<CR>
+nnoremap <silent> <C-w>c :call CloseWindow()<CR>
 
 function! CloseWindow()
     if &buftype == 'terminal'
@@ -300,24 +298,26 @@ endfunction
 
 " Swap windows
 " TODO: close NERDTree if it is open b4 swapping windows and reopen it after that.
-nnoremap <silent> <Leader>ws :wincmd R<CR>
+nnoremap <silent> <C-w>s :wincmd R<CR>
 
 " Resize window
-noremap <silent> <Leader><Left> :vertical resize +5<CR>
-noremap <silent> <Leader><Right> :vertical resize -5<CR>
-noremap <silent> <Leader><Up> :resize +5<CR>
-noremap <silent> <Leader><Down> :resize -5<CR>
+noremap <silent> <C-Left> :vertical resize +5<CR>
+noremap <silent> <C-Right> :vertical resize -5<CR>
+noremap <silent> <C-Up> :resize +5<CR>
+noremap <silent> <C-Down> :resize -5<CR>
 
 " Equalize windows width or height
-noremap <silent> <Leader>= :wincmd =<CR>
+noremap <silent> <C-w>= :wincmd =<CR>
 
 " Maximize window's width or height
 " TODO: close NERDTree if it is open b4 maximizing window and reopen it after that.
-noremap <silent> <Leader>mv :wincmd _<CR>
-noremap <silent> <Leader>mh :wincmd \|<CR>
+" TODO: Map <C-w>z to maximize either horizontaly or verticaly (tmux like
+" behavior)
+nnoremap <silent> <C-w>v :wincmd _<CR>
+nnoremap <silent> <C-w>h :wincmd \|<CR>
 
 " Change window from vertical to horizontal
-map <silent> <Leader>w<Up> :call VerticalToHorizontal()<CR>
+nnoremap <silent> <C-w><Up> :call VerticalToHorizontal()<CR>
 
 " Close NERDTree if it's open before flip window from vertical to horizontal and after that reopen it
 function g:VerticalToHorizontal()
@@ -334,7 +334,7 @@ function g:VerticalToHorizontal()
 endfunc
 
 " Change window from horizontal to vertical
-map <silent> <Leader>w<Down> :call HorizontalTovertical()<CR>
+nnoremap <silent> <C-w><Down> :call HorizontalTovertical()<CR>
 
 " Close NERDTree if it's open before flip window from horizontal to vertical and after that reopen it
 function g:HorizontalTovertical()
@@ -352,10 +352,10 @@ endfunc
 
 " ### Terminal ###
 " Open terminal window
-nnoremap <silent> <Leader>wt :terminal<CR><C-\><C-n>:resize 10<CR>i
+nnoremap <silent> <C-w>t :terminal<CR><C-\><C-n>:resize 10<CR>i
 
 " Close terminal window
-tnoremap <silent> <Leader>wc <C-\><C-n>:q!<CR>
+tnoremap <silent> <C-w>c <C-\><C-n>:q!<CR>
 
 " Enter terminal normal mode
 tnoremap <ESC> <C-\><C-n>

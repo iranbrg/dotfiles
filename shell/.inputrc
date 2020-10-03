@@ -1,7 +1,17 @@
 # Vim emulation to the GNU Readline library (e.g. Python REPL will support Vim bindings)
 set editing-mode vi
-set show-mode-in-prompt on
-# set vi-ins-mode-string "➥ " 
-# set vi-cmd-mode-string "🔒"
-set vi-ins-mode-string "[INSERT]" 
-set vi-cmd-mode-string "[NORMAL]"
+
+$if mode=vi
+    set show-mode-in-prompt on
+
+    # set vi-ins-mode-string "➥ " 
+    # set vi-cmd-mode-string "🔒"
+    set vi-ins-mode-string "[INSERT]" 
+    set vi-cmd-mode-string "[NORMAL]"
+
+    set keymap vi-command
+    Control-l: clear-screen
+
+    set keymap vi-insert
+    Control-l: clear-screen 
+$endif

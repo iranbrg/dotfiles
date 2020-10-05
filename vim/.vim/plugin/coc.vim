@@ -56,7 +56,7 @@ endif
 " Use <CR> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
 " <CR> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)

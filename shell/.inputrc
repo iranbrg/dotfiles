@@ -4,14 +4,12 @@ set editing-mode vi
 $if mode=vi
     set show-mode-in-prompt on
 
-    # set vi-ins-mode-string "➥ " 
-    # set vi-cmd-mode-string "🔒"
-    set vi-ins-mode-string "[INSERT]" 
-    set vi-cmd-mode-string "[NORMAL]"
+    set vi-ins-mode-string "[I]"
+    set vi-cmd-mode-string "[N]"
 
     set keymap vi-command
     Control-l: clear-screen
 
     set keymap vi-insert
-    Control-l: clear-screen 
+    Control-l: clear-screen
 $endif

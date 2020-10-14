@@ -27,7 +27,7 @@ let g:startify_enable_special = 0
 
 " Disable random quotes header
 let g:startify_custom_header = []
-    
+
 " Enable cursorline in Startify screen
 autocmd User Startified setlocal cursorline
 
@@ -64,4 +64,7 @@ let g:startify_lists = [
 
 let g:startify_bookmarks = [
             \  '~/.vim/vimrc',
+            \  '~/.tmux.conf',
+            \  '~/.bashrc',
+            \  '~/.config/alacritty/alacritty.yml',
             \ ]

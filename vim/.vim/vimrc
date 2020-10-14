@@ -131,6 +131,12 @@ Plug 'kevinoid/vim-jsonc'
 " A filetype plugin for csv files
 Plug 'chrisbra/csv.vim'
 
+" Filetype plugin for LaTeX files.
+Plug 'lervag/vimtex'
+
+" Lively Previewing LaTeX PDF Output
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
 " ### Files ###
 " Fuzzy finder and more
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -301,10 +307,10 @@ endfunction
 nnoremap <silent> <C-w>s :wincmd R<CR>
 
 " Resize window
-noremap <silent> <C-Left> :vertical resize +5<CR>
-noremap <silent> <C-Right> :vertical resize -5<CR>
-noremap <silent> <C-Up> :resize +5<CR>
-noremap <silent> <C-Down> :resize -5<CR>
+noremap <silent> <C-Left> :vertical resize +3<CR>
+noremap <silent> <C-Right> :vertical resize -3<CR>
+noremap <silent> <C-Up> :resize +3<CR>
+noremap <silent> <C-Down> :resize -3<CR>
 
 " Equalize windows width or height
 noremap <silent> <C-w>= :wincmd =<CR>

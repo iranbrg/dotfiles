@@ -9,6 +9,7 @@ autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
 " Automatically install extensions on server start
 let g:coc_global_extensions = [
+  \ 'coc-marketplace',
   \ 'coc-explorer',
   \ 'coc-yank',
   \ 'coc-highlight',
@@ -28,6 +29,7 @@ let g:coc_global_extensions = [
   \ 'coc-sql',
   \ 'coc-vimlsp',
   \ 'coc-yaml',
+  \ 'coc-vimtex',
   \ 'coc-clangd'
   \ ]
 

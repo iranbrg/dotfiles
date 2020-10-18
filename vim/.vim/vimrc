@@ -17,6 +17,9 @@ set mouse+=a
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
 
+" Always show tabs
+set showtabline=2
+
 " Load filetype-specific indent and plugin files
 filetype plugin indent on
 

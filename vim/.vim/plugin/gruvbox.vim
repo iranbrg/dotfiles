@@ -18,3 +18,5 @@ if !has('gui_running')
     set t_Co=256
 endif
 
+" Comments become italic
+highlight Comment cterm=italic gui=italic

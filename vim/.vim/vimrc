@@ -53,14 +53,90 @@ endif
 " }}}
 
 "---------------------
+" Plugins Installation
+"---------------------
+" {{{
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+" ### Text editing ###
+" Code completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Comment stuff out
+Plug 'tpope/vim-commentary'
+
+" Easily delete, change and add surroundings in pairs.
+Plug 'tpope/vim-surround'
+
+" Support for expanding HTML abbreviations like emmet
+Plug 'mattn/emmet-vim', { 'for': 'html' }
+
+" Snippets
+Plug 'honza/vim-snippets'
+
+" JSON syntax (comment highlighting especially)
+Plug 'kevinoid/vim-jsonc', { 'for': ['json', 'jsonc'] }
+
+" A filetype plugin for csv files
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+
+" Filetype plugin for LaTeX files.
+Plug 'lervag/vimtex', { 'for': 'tex' }
+
+" Lively previewing LaTeX PDF output
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
+" Syntax and indentation support for various filetypes
+Plug 'sheerun/vim-polyglot'
+
+" ### Files ###
+" Fuzzy finder and more
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter'
+
+" ### Git ###
+" Git integration
+Plug 'tpope/vim-fugitive'
+
+" Enables :Gbrowse from fugitive.vim to open GitHub URLs.
+Plug 'tpope/vim-rhubarb'
+
+" ### Utilities ###
+" Undo history visualizer
+Plug 'mbbill/undotree'
+
+" Displays the ctags-generated tags of the current file, ordered by their scope (to consider)
+" Plug 'majutsushi/tagbar'
+
+" Navigate seamlessly between vim and tmux splits (to consider)
+" Plugin 'christoomey/vim-tmux-navigator'
+
+" ### UI ###
+" Color scheme
+Plug 'morhetz/gruvbox'
+
+" Statusline and its themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Start screen for Vim
+Plug 'mhinz/vim-startify'
+
+" Adds file type icons and its colors (must be the last intalled plugin)
+Plug 'ryanoasis/vim-devicons'
+
+" Initialize plugin system
+call plug#end()
+" }}}
+
+"---------------------
 " Basic Editing Config
 "---------------------
 " {{{
 " Turn on syntax highlighting
 syntax on
-
-" Show matching braces when text indicator is over them
-set showmatch
 
 " Use 4 spaces instead of tabs during formatting
 set tabstop=4
@@ -101,88 +177,6 @@ augroup CursorLineOnlyInActiveWindow
     autocmd WinLeave * setlocal nocursorline
 augroup END
 "}}}
-
-"---------------------
-" Plugins Installation
-"---------------------
-" {{{
-" Specify a directory for plugins
-call plug#begin('~/.vim/plugged')
-
-" ### Text editing ###
-" Code completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Comment stuff out
-Plug 'tpope/vim-commentary'
-
-" Easily delete, change and add surroundings in pairs.
-Plug 'tpope/vim-surround'
-
-" Syntax and indentation support for various filetypes
-Plug 'sheerun/vim-polyglot'
-
-" Support for expanding HTML abbreviations like emmet
-Plug 'mattn/emmet-vim'
-
-" Snippets
-Plug 'honza/vim-snippets'
-
-" JSON syntax (comment highlighting especially)
-Plug 'kevinoid/vim-jsonc'
-
-" A filetype plugin for csv files
-Plug 'chrisbra/csv.vim'
-
-" Filetype plugin for LaTeX files.
-Plug 'lervag/vimtex'
-
-" Lively Previewing LaTeX PDF Output
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-
-" ### Files ###
-" Fuzzy finder and more
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-rooter'
-
-" ### Git ###
-" Git integration
-Plug 'tpope/vim-fugitive'
-
-" Enables :Gbrowse from fugitive.vim to open GitHub URLs.
-Plug 'tpope/vim-rhubarb'
-
-" ### Utilities ###
-" Undo history visualizer
-Plug 'mbbill/undotree'
-
-" Displays the ctags-generated tags of the current file, ordered by their scope
-" Plug 'majutsushi/tagbar'
-
-" Navigate seamlessly between vim and tmux splits
-" Plugin 'christoomey/vim-tmux-navigator'
-
-" ### GUI ###
-" Color scheme
-Plug 'morhetz/gruvbox'
-
-" Statusline and its themes
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" Preview colours in source code while editing
-Plug 'ap/vim-css-color'
-
-" Start screen for Vim
-Plug 'mhinz/vim-startify'
-
-" Adds file type icons and its colors (must be the last intalled plugin)
-Plug 'ryanoasis/vim-devicons'
-
-" Initialize plugin system
-call plug#end()
-" }}}
 
 "------------
 " Keybindings
@@ -247,12 +241,13 @@ vnoremap <leader>ra y:%s/<C-r><C-r>"//g<Left><Left>
 " xnoremap <leader>rl :s//g<Left><Left>
 vnoremap <leader>rl y:s/<C-r><C-r>"//g<Left><Left>
 
-" Copy/Paste/Cut
+" Copy/Paste/Cut (shorturl.at/isLN9, shorturl.at/dquV8)
 " if has('unnamedplus')
     " Always have the clipboard be the same as my regular clipboard
-"   set clipboard=unnamed,unnamedplus
+"   set clipboard=unnamedplus
 " endif
 
+" Yank to and paste from '+' register
 " noremap YY "+y<CR>
 " noremap <leader>p "+gP<CR>
 " noremap XX "+x<CR>

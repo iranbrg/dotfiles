@@ -1,4 +1,4 @@
-" Switch from pdflatex to latexmk as default engine to output a PDF to be previewed
+" Switch the default compiler from pdflatex to latexmk
 let g:livepreview_engine = 'latexmk' . ' -pdf'
 
 " To prevent recompilation on cursor hold

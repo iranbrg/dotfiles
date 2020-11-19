@@ -2,7 +2,7 @@
 vim/.vim/*
 
 # But not these files/directories...
-!vim/.vim/after
 !vim/.vim/vimrc
 !vim/.vim/plugin
 !vim/.vim/coc-settings.json
+!vim/.vim/filetype.vim

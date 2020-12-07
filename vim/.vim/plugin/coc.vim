@@ -91,12 +91,11 @@ nmap <silent> gr <Plug>(coc-references)
 " Search the symbol below the cursor acCRoss the projects files
 nnoremap <leader>rs :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
-" Open yank list, '--normal' means open list on normal mode.
-nnoremap <silent> <space>y  :<C-u>CocList --normal yank<CR>
-
+" ### coc-snippets ###
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
 
+" ### coc-git ###
 " navigate chunks of current buffer
 nmap [h <Plug>(coc-git-prevchunk)
 nmap ]h <Plug>(coc-git-nextchunk)
@@ -113,6 +112,7 @@ nmap <Leader>hs :CocCommand git.chunkStage<CR>
 " Undo current chunk.
 nmap <Leader>hu :CocCommand git.chunkUndo<CR>
 
+" ### coc-explorer ###
 nmap <silent> <C-b> :CocCommand explorer<CR>
 
 " Command :Prettier to format current buffer

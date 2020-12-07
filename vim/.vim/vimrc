@@ -294,7 +294,7 @@ nnoremap <silent> <C-l> :wincmd l<CR>
 
 " Split window
 nnoremap <silent> <C-w>- :sp<CR>
-nnoremap <silent> <C-w>\| :vsp<CR>
+nnoremap <silent> <C-w>\ :vsp<CR>
 
 " Close window
 nnoremap <silent> <C-w>c :call CloseWindow()<CR>

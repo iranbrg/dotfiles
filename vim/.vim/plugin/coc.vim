@@ -11,7 +11,6 @@ autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 let g:coc_global_extensions = [
   \ 'coc-marketplace',
   \ 'coc-explorer',
-  \ 'coc-yank',
   \ 'coc-highlight',
   \ 'coc-pairs',
   \ 'coc-tabnine',
@@ -114,7 +113,7 @@ nmap <Leader>hs :CocCommand git.chunkStage<CR>
 " Undo current chunk.
 nmap <Leader>hu :CocCommand git.chunkUndo<CR>
 
-nmap <C-b> :CocCommand explorer<CR>
+nmap <silent> <C-b> :CocCommand explorer<CR>
 
 " Command :Prettier to format current buffer
 command! -nargs=0 Prettier :CocCommand prettier.formatFile

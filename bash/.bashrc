@@ -1,17 +1,18 @@
-export PATH=$PATH:~/bin
-
 export TERM=xterm-256color
 
 # Vim as the default editor
 export EDITOR=vim
 
-# bat can be used as a colorizing pager for man
+# `bat` can be used as a colorizing pager for man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# Sets `less` as the main pager
+export PAGER=less
 
 # Set Vim mode
 set -o vi
 
-# Test if ~/.aliases exists and source it
+# Tests if `~/.aliases` exists and sources it
 # if [ -f ~/.aliases ]; then
 #     source ~/.aliases
 # fi

@@ -67,4 +67,5 @@ let g:startify_bookmarks = [
             \  '~/.tmux.conf',
             \  '~/.bashrc',
             \  '~/.config/alacritty/alacritty.yml',
+            \  '~/.config/kitty/kitty.conf',
             \ ]

@@ -1,6 +1,6 @@
-"----------------
+"-----------------
 " Some Pre-config
-"----------------
+"-----------------
 "{{{
 " Vi compatible mode is disabled so that Vim things work properly
 set nocompatible
@@ -52,9 +52,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 " }}}
 
-"---------------------
+"----------------------
 " Plugins Installation
-"---------------------
+"----------------------
 " {{{
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
@@ -107,6 +107,9 @@ Plug 'tpope/vim-rhubarb'
 " Undo history visualizer
 Plug 'mbbill/undotree'
 
+" Highlight on yank
+Plug 'machakann/vim-highlightedyank'
+
 " Displays the ctags-generated tags of the current file, ordered by their scope (to consider)
 " Plug 'majutsushi/tagbar'
 
@@ -131,9 +134,9 @@ Plug 'ryanoasis/vim-devicons'
 call plug#end()
 " }}}
 
-"---------------------
+"----------------------
 " Basic Editing Config
-"---------------------
+"----------------------
 " {{{
 " Turn on syntax highlighting
 syntax on
@@ -160,15 +163,20 @@ set smartcase
 set wildmenu
 set wildmode=list:full
 
-" Have lines wrap instead of continue off-screen
-set linebreak
+" Lines longer than the width of the window won't wrap
+set nowrap
+
+" Line breaks at a word boundary rather than in the middle (when wrapping is
+" set)
+" set linebreak
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
 
-" Show lines above and below cursor (when possible)
+" Show lines above, below and aside cursor (when possible)
 set scrolloff=5
+set sidescroll=5
 
 " Highlight current line, but only in active window
 augroup CursorLineOnlyInActiveWindow
@@ -178,9 +186,9 @@ augroup CursorLineOnlyInActiveWindow
 augroup END
 "}}}
 
-"------------
+"-------------
 " Keybindings
-"------------
+"-------------
 " {{{
 " ### General ###
 " Setting <Leader> key to spacebar
@@ -369,3 +377,27 @@ tnoremap <ESC> <C-\><C-n>
 " TODO: Add a :noh at the final to stop highlighting spaces.
 command! FixWhiteSpace :%s/\s\+$//e
 " }}}
+
+"----
+" UI
+"----
+"{{{
+colorscheme gruvbox
+
+" Enable truecolor and set Vim-specific sequences for RGB colors
+if (has("termguicolors"))
+    set termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    let &t_Cs = "\e[4:3m"
+    let &t_Ce = "\e[4:0m"
+    let &t_ut=""
+endif
+
+if !has('gui_running')
+    set t_Co=256
+endif
+
+" Make comments become italic
+highlight Comment cterm=italic gui=italic
+"}}}

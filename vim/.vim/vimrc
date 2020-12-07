@@ -72,6 +72,8 @@ Plug 'tpope/vim-surround'
 " Support for expanding HTML abbreviations like emmet
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 
+Plug 'alvan/vim-closetag'
+
 " Snippets
 Plug 'honza/vim-snippets'
 
@@ -109,6 +111,9 @@ Plug 'mbbill/undotree'
 
 " Highlight on yank
 Plug 'machakann/vim-highlightedyank'
+
+" Displays indentation level for code indented with spaces
+Plug 'yggdroot/indentline'
 
 " Displays the ctags-generated tags of the current file, ordered by their scope (to consider)
 " Plug 'majutsushi/tagbar'

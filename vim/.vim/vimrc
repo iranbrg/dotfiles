@@ -169,11 +169,11 @@ set wildmenu
 set wildmode=list:full
 
 " Lines longer than the width of the window won't wrap
-set nowrap
+" set nowrap
 
 " Line breaks at a word boundary rather than in the middle (when wrapping is
 " set)
-" set linebreak
+set linebreak
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow

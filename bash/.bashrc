@@ -5,7 +5,6 @@ export PAGER=less
 export BAT_THEME="gruvbox"
 BAT_OPTS="--italic-text=always --color=always"
 
-
 FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
 export FZF_DEFAULT_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='C-v, ?, C-d, C-u, C-y' \
                         --bind='ctrl-v:execute(echo {+} | xargs -o $EDITOR)+abort,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard)' \

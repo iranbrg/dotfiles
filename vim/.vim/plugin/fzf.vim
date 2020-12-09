@@ -1,27 +1,26 @@
+let g:fzf_command_prefix = 'Fzf'
+
 " Centralize fzf window
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 
-" Set top to bottom layout
-let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
+nnoremap <silent> <C-p> :FzfFiles<CR>
+nnoremap <silent> <C-g> :FzfRg<CR>
+nnoremap <silent> <Leader>b :FzfBuffers<CR>
+nnoremap <silent> q: :FzfHistory:<CR>
+nnoremap <silent> <C-?> :FzfHistory/<CR>
+" nnoremap <silent> <Leader>fc :Commits<CR>
 
-if executable('rg')
-    let g:rg_derive_root='true'
-endif
-
-" if executable('rg')
-"   let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-"   set grepprg=rg\ --vimgrep
-"   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-" endif
-
-nnoremap <silent> <C-p> :FZF<CR>
-nnoremap <silent> <Leader>ff :Files<CR>
-nnoremap <silent> q: :History:<CR>
-nnoremap <silent> <Leader>fs :History/<CR>
-nnoremap <silent> <Leader>fb :Buffers<CR>
-nnoremap <silent> <Leader>fc :Commits<CR>
-nnoremap <silent> <Leader>fr :Rg<CR>
-nnoremap <silent> <Leader>fg :GFiles<CR>
+imap <C-x><C-f> <plug>(fzf-complete-path)
 
 " Search the symbol below the cursor accross the projects files
-nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
+nnoremap <C-f> :FzfRg <C-r>=expand("<cword>")<CR><CR>
+
+command! -nargs=* -bang FzfRg call RipgrepFzf(<q-args>, <bang>0)
+
+function! RipgrepFzf(query, fullscreen)
+    let command_fmt = 'rg --follow --column --line-number --no-heading --color=always --smart-case --hidden -g "!.git/*" -g "!node_modules/*" -- %s || true'
+    let initial_command = printf(command_fmt, shellescape(a:query))
+    let reload_command = printf(command_fmt, '{q}')
+    let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction

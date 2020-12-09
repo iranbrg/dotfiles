@@ -302,16 +302,17 @@ nnoremap <silent> <C-w>- :sp<CR>
 nnoremap <silent> <C-w>\ :vsp<CR>
 
 " Close window
-nnoremap <silent> <C-w>c :call CloseWindow()<CR>
+nnoremap <silent> <C-w>c :wincmd c<CR>
+" nnoremap <silent> <C-w>c :call CloseWindow()<CR>
 
-function! CloseWindow()
-    if &buftype == 'terminal'
-        execute ":q!"
-        call feedkeys("\<CR>")
-    else
-        execute ":wincmd" "c"
-    endif
-endfunction
+" function! CloseWindow()
+"     if &buftype == 'terminal'
+"         execute ":q!"
+"         call feedkeys("\<CR>")
+"     else
+"         execute ":wincmd" "c"
+"     endif
+" endfunction
 
 " Swap windows
 " TODO: close NERDTree if it is open b4 swapping windows and reopen it after that.
@@ -369,13 +370,13 @@ endfunc
 
 " ### Terminal ###
 " Open terminal window
-nnoremap <silent> <C-w>t :terminal<CR><C-\><C-n>:resize 10<CR>i
+" nnoremap <silent> <C-w>t :terminal<CR><C-\><C-n>:resize 10<CR>i
 
 " Close terminal window
-tnoremap <silent> <C-w>c <C-\><C-n>:q!<CR>
+" tnoremap <silent> <C-w>c <C-\><C-n>:q!<CR>
 
 " Enter terminal normal mode
-tnoremap <ESC> <C-\><C-n>
+" tnoremap <ESC> <C-\><C-n>
 
 " ### Commands ###
 " Command :FixWhiteSpace to remove trailing whitespaces

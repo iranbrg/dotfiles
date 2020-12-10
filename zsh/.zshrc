@@ -114,7 +114,7 @@ bindkey -M menuselect 'l' vi-forward-char
 # Fix backspace bug when switching modes
 bindkey "^?" backward-delete-char
 
-# Change cursor shape for different vi modes. (doesn't work well within tmux)
+# Change cursor shape for different vi modes. (doesn't work well within tmux when vim is open the cursor stands as `|`)
 # function zle-keymap-select {
 #   if [[ ${KEYMAP} == vicmd ]] ||
 #      [[ $1 = 'block' ]]; then
@@ -127,6 +127,13 @@ bindkey "^?" backward-delete-char
 #   fi
 # }
 # zle -N zle-keymap-select
+# zle-line-init() {
+#     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+#     echo -ne "\e[5 q"
+# }
+# zle -N zle-line-init
+# echo -ne '\e[5 q' # Use beam shape cursor on startup.
+# preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # ci", ci', ci`, di", etc
 autoload -U select-quoted

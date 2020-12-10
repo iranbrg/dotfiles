@@ -25,10 +25,43 @@ bindkey -s "^p" "fzf\n"
 alias live-server="browser-sync start --server --files . --no-notify --port 5500"
 alias stow="stow -v"
 alias bat="bat $BAT_OPTS"
+alias fd="fd $FD_OPTS"
 alias sozsh="source ~/.zshrc"
 alias rg="rg --column --smart-case --follow --hidden -p -g '!.git/*' -g '!node_modules/*'"
 alias xcopy='xclip -selection clipboard'
 alias xpaste='xclip -selection clipboard -o'
+alias ll="ls -lhAp --color=auto"
+alias ls="ls -Ap --color=auto --group-directories-first"
+alias mv="mv -vi"           # -i prompts before overwrite
+alias mkdir="mkdir -vp"     # -p make parent dirs as needed
+alias df="df -h"           # -h prints human readable format
+alias cp="cp -vi"                          # confirm before overwriting something
+alias rm="rm -vI"
+alias free='free -h'                      # show sizes in MB
+
+# # ex - archive extractor
+# # usage: ex <file>
+ex ()
+{
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1   ;;
+            *.tar.gz)    tar xzf $1   ;;
+            *.bz2)       bunzip2 $1   ;;
+            *.rar)       unrar x $1   ;;
+            *.gz)        gunzip $1    ;;
+            *.tar)       tar xf $1    ;;
+            *.tbz2)      tar xjf $1   ;;
+            *.tgz)       tar xzf $1   ;;
+            *.zip)       unzip $1     ;;
+            *.Z)         uncompress $1;;
+            *.7z)        7z x $1      ;;
+            *)           echo "'$1' cannot be extracted via ex()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
 
 # stow (th stands for 'target=home')
 # stowth() {
@@ -132,20 +165,17 @@ setopt interactivecomments
 # [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
 source ./.zsh/agnoster-zsh-theme/agnoster.zsh-theme 2>/dev/null
-# Search repos for programs that can't be found
+
+# Search repos for programs that can't be found (if it doesn't work properly execute `pkgfile --update` and try again)
 source /usr/share/doc/pkgfile/command-not-found.zsh 2>/dev/null
+
 # Suggest aliases for commands
 source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh 2>/dev/null
+
 # `fish` like autosuggestions
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+bindkey '^ ' autosuggest-accept
+
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-
-# export ZSH="$HOME/.config/oh-my-zsh/"
-# export ZSH_CUSTOM="$HOME/.config/zsh/custom/"
-# ZSH_THEME="agnoster"
-# plugins=(
-# 	zsh-you-should-use
-#     command-not-found
-#     zsh-syntax-highlighting
-# )
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)

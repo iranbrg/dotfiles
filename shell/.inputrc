@@ -1,3 +1,5 @@
+$include /etc/inputrc
+
 # Vim emulation to the GNU Readline library (e.g. Python REPL will support Vim bindings)
 set editing-mode vi
 
@@ -8,8 +10,8 @@ set editing-mode vi
 $if mode=vi
     set show-mode-in-prompt on
 
-    set vi-ins-mode-string "[I]"
-    set vi-cmd-mode-string "[N]"
+    set vi-ins-mode-string \1\e[34;1m\2[I]\1\e[0m\2
+    set vi-cmd-mode-string \1\e[35;1m\2[N]\1\e[0m\2
 
     set keymap vi-command
     Control-l: clear-screen

@@ -1,6 +1,10 @@
 # Vim emulation to the GNU Readline library (e.g. Python REPL will support Vim bindings)
 set editing-mode vi
 
+# set completion-ignore-case on
+# set show-all-if-ambiguous on
+# set show-all-if-unmodified on
+
 $if mode=vi
     set show-mode-in-prompt on
 
@@ -12,4 +16,7 @@ $if mode=vi
 
     set keymap vi-insert
     Control-l: clear-screen
+
+    # "\e.": yank-last-arg
+    # "\e_": yank-last-arg
 $endif

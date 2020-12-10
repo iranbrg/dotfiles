@@ -1,3 +1,6 @@
+zsh/.zsh/*
+!zsh/.zsh/.gitkeep
+
 # Ignore everything inside .vim
 vim/.vim/*
 

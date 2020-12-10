@@ -1,3 +1,6 @@
+# Set the shell to zsh
+export SHELL=/bin/zsh
+
 export TERM=xterm-256color
 export EDITOR=vim
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -38,12 +41,17 @@ alias xpaste='xclip -selection clipboard -o'
 
 # Enable colors and change prompt:
 autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+# Allow for variable/function substitution in prompt
+setopt prompt_subst
+# PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+HISTFILE=$HOME/.cache/zsh/history
+# setopt appendhistory
+# setopt incappendhistory
+# setopt extendedhistory
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -56,7 +64,8 @@ _comp_options+=(globdots)		# Include hidden files.
 
 # vi mode
 bindkey -v
-export KEYTIMEOUT=1
+# Time to wait for additional characters in a sequence
+KEYTIMEOUT=1 # corresponds to 10ms
 
 # Edit line in vim buffer ctrl-v
 autoload edit-command-line; zle -N edit-command-line
@@ -85,13 +94,6 @@ bindkey "^?" backward-delete-char
 #   fi
 # }
 # zle -N zle-keymap-select
-# zle-line-init() {
-#     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-#     echo -ne "\e[5 q"
-# }
-# zle -N zle-line-init
-# echo -ne '\e[5 q' # Use beam shape cursor on startup.
-# preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # ci", ci', ci`, di", etc
 autoload -U select-quoted
@@ -111,6 +113,9 @@ for m in visual viopp; do
   done
 done
 
+# Enable interactive comments (# on the command line)
+setopt interactivecomments
+
 # Use lf to switch directories and bind it to ctrl-o
 # lfcd () {
 #     tmp="$(mktemp)"
@@ -126,9 +131,21 @@ done
 # Load aliases and shortcuts if existent.
 # [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
-# Load zsh-syntax-highlighting; should be last.
-# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-# Suggest aliases for commands
-# source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh 2>/dev/null
+source ./.zsh/agnoster-zsh-theme/agnoster.zsh-theme 2>/dev/null
 # Search repos for programs that can't be found
-# source /usr/share/doc/pkgfile/command-not-found.zsh 2>/dev/null
+source /usr/share/doc/pkgfile/command-not-found.zsh 2>/dev/null
+# Suggest aliases for commands
+source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh 2>/dev/null
+# `fish` like autosuggestions
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+# Load zsh-syntax-highlighting; should be last.
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+# export ZSH="$HOME/.config/oh-my-zsh/"
+# export ZSH_CUSTOM="$HOME/.config/zsh/custom/"
+# ZSH_THEME="agnoster"
+# plugins=(
+# 	zsh-you-should-use
+#     command-not-found
+#     zsh-syntax-highlighting
+# )

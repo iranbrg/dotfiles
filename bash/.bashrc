@@ -6,8 +6,8 @@ export BAT_THEME="gruvbox"
 BAT_OPTS="--italic-text=always --color=always"
 
 FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
-export FZF_DEFAULT_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='C-v, ?, C-d, C-u, C-y' \
-                        --bind='ctrl-v:execute(echo {+} | xargs -o $EDITOR)+abort,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard)' \
+export FZF_DEFAULT_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='C-e, ?, C-d, C-u, C-y' \
+                        --bind='ctrl-e:execute(echo {+} | xargs -o $EDITOR)+abort,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard)' \
                         --preview='([[ -f {} ]] && (bat -n $BAT_OPTS {} || cat {})) || ([[ -d {} ]] && (tree -a -C {} | less)) || echo {} 2> /dev/null | head -200'"
 export FZF_DEFAULT_COMMAND="fd --type f $FD_OPTS"
 export FZF_CTRL_T_COMMAND="fd $FD_OPTS"
@@ -43,3 +43,5 @@ alias xpaste='xclip -selection clipboard -o'
 # unstowth() {
 #   stow -vDt ~ $1
 # }
+
+# PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "

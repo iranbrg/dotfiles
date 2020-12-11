@@ -65,7 +65,6 @@ let g:startify_lists = [
 let g:startify_bookmarks = [
             \  '~/.vim/vimrc',
             \  '~/.tmux.conf',
-            \  '~/.bashrc',
-            \  '~/.config/alacritty/alacritty.yml',
+            \  '~/.zshrc',
             \  '~/.config/kitty/kitty.conf',
             \ ]

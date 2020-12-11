@@ -1,3 +1,15 @@
-[submodule "zsh/.zsh/agnoster-zsh-theme"]
-	path = zsh/.zsh/agnoster-zsh-theme
-	url = https://github.com/agnoster/agnoster-zsh-theme
+[submodule "zsh/.zsh/plugins/zsh-completions"]
+	path = zsh/.zsh/plugins/zsh-completions
+	url = git@github.com:zsh-users/zsh-completions.git
+[submodule "zsh/.zsh/themes/agnoster-zsh-theme"]
+	path = zsh/.zsh/themes/agnoster-zsh-theme
+	url = git@github.com:agnoster/agnoster-zsh-theme.git
+[submodule "zsh/.zsh/plugins/zsh-syntax-highlighting"]
+	path = zsh/.zsh/plugins/zsh-syntax-highlighting
+	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/.zsh/plugins/zsh-you-should-use"]
+	path = zsh/.zsh/plugins/zsh-you-should-use
+	url = git@github.com:MichaelAquilina/zsh-you-should-use.git
+[submodule "zsh/.zsh/plugins/zsh-autosuggestions"]
+	path = zsh/.zsh/plugins/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git

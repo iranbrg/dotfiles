@@ -132,6 +132,8 @@ Plug 'vim-airline/vim-airline-themes'
 " Start screen for Vim
 Plug 'mhinz/vim-startify'
 
+Plug 'junegunn/rainbow_parentheses.vim'
+
 " Adds file type icons and its colors (must be the last intalled plugin)
 Plug 'ryanoasis/vim-devicons'
 

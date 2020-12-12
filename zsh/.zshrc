@@ -201,18 +201,18 @@ fpath=($HOME/.zsh/plugins/zsh-completions/src $fpath)
 # autoload -Uz cursor_mode; cursor_mode
 
 # Agnoster theme to the prompt
-source ./.zsh/themes/agnoster-zsh-theme/agnoster.zsh-theme 2>/dev/null
+source ~/dotfiles/zsh/.zsh/themes/agnoster-zsh-theme/agnoster.zsh-theme 2>/dev/null
 
 # Search repos for programs that can't be found (if it doesn't work properly execute `pkgfile --update` and try again)
 source /usr/share/doc/pkgfile/command-not-found.zsh 2>/dev/null
 
 # Suggest aliases for commands
-source ./.zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh 2>/dev/null
+source ~/dotfiles/zsh/.zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh 2>/dev/null
 
 # `fish` like autosuggestions
-source ./.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+source ~/dotfiles/zsh/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 bindkey '^ ' autosuggest-accept
 
 # Load zsh-syntax-highlighting (should be last)
-source ./.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source ~/dotfiles/zsh/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)

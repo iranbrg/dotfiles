@@ -1,11 +1,12 @@
 # Ignore everything inside .vim
 vim/.vim/*
 
-# But not these files/directories...
+# Except these files/directories...
 !vim/.vim/vimrc
 !vim/.vim/plugin
 !vim/.vim/coc-settings.json
 !vim/.vim/filetype.vim
 
-tmux/.tmux/plugins/
+tmux/.tmux/plugins/*
 !tmux/.tmux/plugins/tpm
+!tmux/.tmux/plugins/*.sh

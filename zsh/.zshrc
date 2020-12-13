@@ -14,6 +14,9 @@ export PAGER="less"
 # Uses `bat` to colorize man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+# Purple group coloring in long list for 'exa'
+export EXA_COLORS="gu=35;1"
+
 # `bat` defaults
 export BAT_THEME="gruvbox"
 BAT_OPTS="--italic-text=always --color=always"
@@ -39,8 +42,6 @@ export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
 # [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
 # Overwrite existing commands for better defaults
-alias ll="ls -lhAp --color=auto --group-directories-first"
-alias ls="ls -Ap --color=auto --group-directories-first"
 alias mv="mv -vi"
 alias mkdir="mkdir -vp"
 alias df="df -h"
@@ -49,6 +50,8 @@ alias rm="rm -vI"
 alias free="free -h"
 
 # Aliases for "third party" programs
+alias ll="exa -lagh --icons --color=auto --group-directories-first"
+alias ls="exa -a --icons --color=auto --group-directories-first"
 alias stow="stow -v"
 alias bat="bat $BAT_OPTS"
 alias fd="fd $FD_OPTS"

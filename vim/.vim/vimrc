@@ -30,7 +30,7 @@ set ttyfast
 set lazyredraw
 
 " Longer updatetime (default is 4000ms) leads to noticeable delays
-set updatetime=300
+set updatetime=100
 
 " Create the 'undodir' folder and its parents if they don't exist
 if !isdirectory($HOME."/.vim/undodir")
@@ -104,6 +104,9 @@ Plug 'tpope/vim-fugitive'
 
 " Enables :Gbrowse from fugitive.vim to open GitHub URLs.
 Plug 'tpope/vim-rhubarb'
+
+" Show VCS diff in the sign column
+Plug 'mhinz/vim-signify'
 
 " ### Utilities ###
 " Undo history visualizer

@@ -1,6 +1,6 @@
-"-----------------
-" Some Pre-config
-"-----------------
+" +-----------------+
+" | Some Pre-config |
+" +-----------------+
 "{{{
 " Vi compatible mode is disabled so that Vim things work properly
 set nocompatible
@@ -52,9 +52,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 " }}}
 
-"----------------------
-" Plugins Installation
-"----------------------
+" +----------------------+
+" | Plugins Installation |
+" +----------------------+
 " {{{
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
@@ -144,20 +144,20 @@ Plug 'ryanoasis/vim-devicons'
 call plug#end()
 " }}}
 
-"----------------------
-" Basic Editing Config
-"----------------------
+" +----------------------+
+" | Basic Editing Config |
+" +----------------------+
 " {{{
 " Turn on syntax highlighting
 syntax on
 
-" Use 4 spaces instead of tabs during formatting
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set autoindent
-set smartindent
+" Indentation
+set tabstop=4     " tabs are at proper location
+set softtabstop=4 " Number of spaces that a <Tab> counts
+set shiftwidth=4  " indenting is 4 spaces
+set expandtab     " don't use actual tab character
+set autoindent    " automatically indent newlines
+set smartindent   " does the right thing (mostly) in programs
 
 " Line numbering
 set nu
@@ -196,9 +196,9 @@ augroup CursorLineOnlyInActiveWindow
 augroup END
 "}}}
 
-"-------------
-" Keybindings
-"-------------
+" +-------------+
+" | Keybindings |
+" +-------------+
 " {{{
 " ### General ###
 " Setting <Leader> key to spacebar
@@ -319,10 +319,6 @@ nnoremap <silent> <C-w>c :wincmd c<CR>
 "     endif
 " endfunction
 
-" Swap windows
-" TODO: close NERDTree if it is open b4 swapping windows and reopen it after that.
-nnoremap <silent> <C-w>s :wincmd R<CR>
-
 " Resize window
 noremap <silent> <C-Left> :vertical resize +3<CR>
 noremap <silent> <C-Right> :vertical resize -3<CR>
@@ -389,9 +385,9 @@ endfunc
 command! FixWhiteSpace :%s/\s\+$//e
 " }}}
 
-"----
-" UI
-"----
+" +----+
+" | UI |
+" +----+
 "{{{
 colorscheme gruvbox
 
@@ -409,6 +405,6 @@ if !has('gui_running')
     set t_Co=256
 endif
 
-" Make comments become italic
+" Make comments become italic (if your font does support it, of course)
 highlight Comment cterm=italic gui=italic
 "}}}

@@ -1,6 +1,6 @@
-# --------------------
-# Enviroment Variables
-# --------------------
+# +----------------------+
+# | Enviroment Variables |
+# +----------------------+
 # XDG Base Directory
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.cache"
@@ -25,19 +25,20 @@ BAT_OPTS="--italic-text=always --color=always"
 FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
 
 # `fzf` defaults
-export FZF_DEFAULT_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='C-e, ?, C-d, C-u, C-y' \
-                        --bind='ctrl-e:execute(echo {+} | xargs -o $EDITOR)+abort,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard)' \
-                        --preview='([[ -f {} ]] && (bat -n $BAT_OPTS {} || cat {})) || \
-                        ([[ -d {} ]] && (tree -a -C {} | less)) || \
+FZF_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='C-e, ?, C-d, C-u, C-y'"
+FZF_BIND="--bind='ctrl-e:execute(echo {+} | xargs -o $EDITOR)+abort,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard)'"
+FZF_PREVIEW="--preview='([[ -f {} ]] && (bat -n $BAT_OPTS {} || cat {})) || \
+                        ([[ -d {} ]] && (tree -aC {} | less)) || \
                         echo {} 2> /dev/null | head -200'"
+export FZF_DEFAULT_OPTS="$FZF_OPTS $FZF_BIND $FZF_PREVIEW"
 export FZF_DEFAULT_COMMAND="fd --type f $FD_OPTS"
 export FZF_CTRL_T_COMMAND="fd $FD_OPTS"
 export FZF_CTRL_R_OPTS="--preview-window down:3:wrap"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
 
-# -------
-# Aliases
-# -------
+# +---------+
+# | Aliases |
+# +---------+
 # Load aliases and shortcuts if existent.
 # [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
@@ -61,9 +62,9 @@ alias sozsh="source ~/.zshrc"
 alias xcopy='xclip -selection clipboard'
 alias xpaste='xclip -selection clipboard -o'
 
-# --
-# UI
-# --
+# +----+
+# | UI |
+# +----+
 # Enable colors and change prompt
 autoload -U colors && colors
 
@@ -73,9 +74,9 @@ setopt prompt_subst
 # Prompt format
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
-# -------------------
-# Basic Configuration
-# -------------------
+# +---------------------+
+# | Basic Configuration |
+# +---------------------+
 # History defaults
 HISTSIZE=10000
 SAVEHIST=10000
@@ -86,9 +87,9 @@ setopt extended_history
 # Enable interactive comments (# on the command line)
 setopt interactivecomments
 
-# -----------
-# Keybindings
-# -----------
+# +-------------+
+# | Keybindings |
+# +-------------+
 # Basic auto/tab complete
 autoload -Uz compinit
 zstyle ':completion:*' menu select
@@ -187,9 +188,9 @@ ex ()
 #   stow -vDt ~ $1
 # }
 
-# -------
-# Plugins
-# -------
+# +---------+
+# | Plugins |
+# +---------+
 # Post sourcing for `fzf`
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh

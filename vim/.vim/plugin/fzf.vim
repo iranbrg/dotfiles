@@ -10,13 +10,15 @@ nnoremap <silent> q: :FzfHistory:<CR>
 nnoremap <silent> <C-?> :FzfHistory/<CR>
 " nnoremap <silent> <Leader>fc :Commits<CR>
 
-imap <C-x><C-f> <plug>(fzf-complete-path)
+" Path completion in insert mode (acts like C-t in terminal)
+inoremap <expr> <C-x><C-t> fzf#vim#complete#path('fd --hidden --follow --exclude .git --exclude node_modules')
 
 " Search the symbol below the cursor accross the projects files
 nnoremap <C-f> :FzfRg <C-r>=expand("<cword>")<CR><CR>
 
 command! -nargs=* -bang FzfRg call RipgrepFzf(<q-args>, <bang>0)
 
+" fzf acts like a selector interface for ripgrep rather than a 'fuzzy finder'
 function! RipgrepFzf(query, fullscreen)
     let command_fmt = 'rg --follow --column --line-number --no-heading --color=always --smart-case --hidden -g "!.git/*" -g "!node_modules/*" -- %s || true'
     let initial_command = printf(command_fmt, shellescape(a:query))

@@ -49,6 +49,8 @@ alias df="df -h"
 alias cp="cp -vi"
 alias rm="rm -vI"
 alias free="free -h"
+alias ss="sudo ss -plunt" # To show the PID and name of some processes this command must be run with sudo
+
 
 # Aliases for "third party" programs
 alias ll="exa -lagh --icons --color=auto --group-directories-first"
@@ -87,9 +89,6 @@ setopt extended_history
 # Enable interactive comments (# on the command line)
 setopt interactivecomments
 
-# +-------------+
-# | Keybindings |
-# +-------------+
 # Basic auto/tab complete
 autoload -Uz compinit
 zstyle ':completion:*' menu select
@@ -103,29 +102,29 @@ compinit
 # Include hidden files.
 _comp_options+=(globdots)
 
-bindkey -s "^p" "fzf\n"
-
 # vi mode
 bindkey -v
-# Recommended time to wait for additional characters in a sequence (1 = 10ms)
-KEYTIMEOUT=1
+KEYTIMEOUT=1 # Recommended time to wait for additional characters in a sequence (1 = 10ms)
+
+# +-------------+
+# | Keybindings |
+# +-------------+
+bindkey -s "\C-p" "fzf\n"
 
 # Edit line in vim buffer 'ctrl-e'
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
-# Enter vim buffer from normal mode
-bindkey -M vicmd "^e" edit-command-line
+bindkey -M vicmd "^e" edit-command-line # Enter vim buffer also from normal mode
 
 # Use vim keys in tab complete menu
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
-# Fix backspace bug when switching modes
-bindkey "^?" backward-delete-char
+bindkey "^?" backward-delete-char # Fix backspace bug when switching modes
 
-# Enables vim commands inside quotes (like 'ci"')
+# Edit inside quotes (like 'ci"')
 autoload -U select-quoted
 zle -N select-quoted
 for m in visual viopp; do
@@ -134,7 +133,7 @@ for m in visual viopp; do
     done
 done
 
-# Enables vim commands inside brackets (like 'ci[')
+# Edit inside brackets (like 'ci[')
 autoload -U select-bracketed
 zle -N select-bracketed
 for m in visual viopp; do
@@ -143,17 +142,29 @@ for m in visual viopp; do
     done
 done
 
-# Use lf to switch directories and bind it to ctrl-o
-# lfcd () {
-#     tmp="$(mktemp)"
-#     lf -last-dir-path="$tmp" "$@"
-#     if [ -f "$tmp" ]; then
-#         dir="$(cat "$tmp")"
-#         rm -f "$tmp"
-#         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-#     fi
+# fzf acts like a selector interface for ripgrep rather than a 'fuzzy finder'
+# TODO: make a better previewer for ripgrep like the one used in fzf.vim
+RipgrepFzf () {
+    INITIAL_QUERY=""
+    RG_PREFIX="rg --follow --column --line-number --no-heading --color=always --smart-case --hidden -g '!.git/*' -g '!node_modules/*'"
+    FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY'" \
+        fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+        --ansi --phony --query "$INITIAL_QUERY" \
+        -m --height 50% --reverse --border --cycle --inline-info --no-header \
+        --preview="/home/iran/dotfiles/vim/.vim/plugged/fzf.vim/bin/preview.sh {}"
+}
+
+bindkey -s "\C-g" "RipgrepFzf\n"
+
+# openWithFzf() {
+#     fd -t f -H -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
 # }
-# bindkey -s '^o' 'lfcd\n'
+
+# bindkey -s "\C-f" "openWithFzf\n"
+
+# pacs() {
+#     sudo pacman -Syy $(pacman -Ssq | fzf -m --preview="pacman -Si {}" --preview-window=:hidden --bind=space:toggle-preview)
+# }
 
 # ex - archive extractor
 # Usage: ex <file>
@@ -179,6 +190,18 @@ ex ()
     fi
 }
 
+# Prints cointainers in a formated way (it's a workaround cuz aliases can't
+# have spaces in between)
+docker() {
+    if [[ $@ == "ps" ]]; then
+        command docker ps --format="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{{.Ports}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.CreatedAt}}\nSTATUS\t{{.Status}}\n"
+    elif [[ $@ == "ps -a" ]]; then
+        command docker ps -a --format="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{{.Ports}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.CreatedAt}}\nSTATUS\t{{.Status}}\n"
+    else
+        command docker $@
+    fi
+}
+
 # stow (th stands for 'target=home')
 # stowth() {
 #   stow -vt ~ $1
@@ -187,6 +210,18 @@ ex ()
 # unstowth() {
 #   stow -vDt ~ $1
 # }
+
+# Use lf to switch directories and bind it to ctrl-o
+# lfcd () {
+#     tmp="$(mktemp)"
+#     lf -last-dir-path="$tmp" "$@"
+#     if [ -f "$tmp" ]; then
+#         dir="$(cat "$tmp")"
+#         rm -f "$tmp"
+#         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+#     fi
+# }
+# bindkey -s '^o' 'lfcd\n'
 
 # +---------+
 # | Plugins |

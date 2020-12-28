@@ -92,6 +92,9 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 " Syntax and indentation support for various filetypes
 Plug 'sheerun/vim-polyglot'
 
+" EditorConfig plugin for Vim
+Plug 'editorconfig/editorconfig-vim'
+
 " ### Files ###
 " Fuzzy finder and more
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -144,20 +147,20 @@ Plug 'ryanoasis/vim-devicons'
 call plug#end()
 " }}}
 
-" +----------------------+
-" | Basic Editing Config |
-" +----------------------+
+" +--------------+
+" | Basic Config |
+" +--------------+
 " {{{
 " Turn on syntax highlighting
 syntax on
 
 " Indentation
-set tabstop=4     " tabs are at proper location
+set tabstop=4     " Number of columns of whitespaces a \t represents
+set shiftwidth=4  " A level of indentation is 4 spaces
 set softtabstop=4 " Number of spaces that a <Tab> counts
-set shiftwidth=4  " indenting is 4 spaces
-set expandtab     " don't use actual tab character
-set autoindent    " automatically indent newlines
-set smartindent   " does the right thing (mostly) in programs
+set expandtab     " '\t' character will be expanded into spaces
+set autoindent    " Automatically indent newlines
+set smartindent   " Does the right thing (mostly) in programs
 
 " Line numbering
 set nu
@@ -173,9 +176,6 @@ set smartcase
 set wildmenu
 set wildmode=list:full
 
-" Lines longer than the width of the window won't wrap
-" set nowrap
-
 " Line breaks at a word boundary rather than in the middle (when wrapping is
 " set)
 set linebreak
@@ -187,6 +187,22 @@ set splitright
 " Show lines above, below and aside cursor (when possible)
 set scrolloff=5
 set sidescroll=5
+
+" Folding
+autocmd BufWinEnter * call Folding()
+
+function Folding()
+    if &fdm != "marker"
+        setlocal foldmethod=syntax " Folds are defined by syntax highlighting
+        setlocal nofoldenable      " Disables auto folding on opening file
+        setlocal foldlevel=99      " Folds with a higher level will be closed (usefull to only fold outer functions)
+    endif
+endfunction
+
+" Always have the clipboard be the same as my regular clipboard
+if has('unnamedplus')
+    set clipboard=unnamedplus
+endif
 
 " Highlight current line, but only in active window
 augroup CursorLineOnlyInActiveWindow
@@ -208,12 +224,7 @@ let mapleader=" "
 set backspace=indent,eol,start
 
 " Unbind the annoying 'Q' which in normal mode enters Ex mode and sometimes
-" i forget to disable capslock what masses everything up in
-" normal mode
 nmap Q <Nop>
-nmap J :echo "Maybe capslock is enabled, disable it."<CR>
-nmap H :echo "Maybe capslock is enabled, disable it."<CR>
-nmap L :echo "Maybe capslock is enabled, disable it."<CR>
 
 " Search results are centered
 nnoremap <silent> n nzz
@@ -230,70 +241,51 @@ set pastetoggle=<F2>
 " Toggle relative numbering
 nnoremap <silent> <F3> :set rnu!<CR>
 
-" (Shift+)Tab (de)indents code
-nnoremap <Tab> >>_
+" <Tab> to indent and <S-Tab> to deintent lines
+nnoremap <Tab>   >>_
 nnoremap <S-Tab> <<_
-" <S-Tab> doesn't work in insert mode as expected and I don't know how to solve it. Maybe S-Tab is already mapped
-" inoremap <S-Tab> <C-d>
-vnoremap <Tab> >gv
+vnoremap <Tab>   >gv
 vnoremap <S-Tab> <gv
 
-" C-k/C-j to move code lines/blocks up and down (find a way to make it work
-" with the Alt key rather than Ctrl)
-" execute "set <M-j>=\ej"
-" execute "set <M-k>=\ek"
-" nnoremap <silent> <C-k> :m .-2<CR>==
-" nnoremap <silent> <C-j> :m .+1<CR>==
-" inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
-" inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
-" vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
-" vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
+" Move lines/blocks up and down (somehow gotta map it to <A-k> and <A-j>)
+" Map these scape sequeces to make the Alt key be recognized
+map [1;3A] <A-Up>
+map [1;3B] <A-Down>
+nnoremap <silent> <A-Up>   :m .-2<CR>==
+nnoremap <silent> <A-Down> :m .+1<CR>==
+vnoremap <silent> <A-Up>   :m '<-2<CR>gv=gv
+vnoremap <silent> <A-Down> :m '>+1<CR>gv=gv
 
 " Fast edit '.vimrc' file
-nmap <Leader>rc :tabnew $MYVIMRC<CR>
+nmap <Leader>e :tabnew $MYVIMRC<CR>
 
-" Replace all occurences of selection
-vnoremap <leader>ra y:%s/<C-r><C-r>"//g<Left><Left>
+" ### Find and Replace ###
+" All occurences of selection
+vnoremap <Leader>ra y:%s/<C-r><C-r>"//g<Left><Left>
 
-" Find/replace in line selection
-" xnoremap <leader>rl :s//g<Left><Left>
-vnoremap <leader>rl y:s/<C-r><C-r>"//g<Left><Left>
-
-" Copy/Paste/Cut (shorturl.at/isLN9, shorturl.at/dquV8)
-" if has('unnamedplus')
-    " Always have the clipboard be the same as my regular clipboard
-"   set clipboard=unnamedplus
-" endif
-
-" Yank to and paste from '+' register
-" noremap YY "+y<CR>
-" noremap <leader>p "+gP<CR>
-" noremap XX "+x<CR>
+" In line selection
+vnoremap <Leader>rl y:s/<C-r><C-r>"//g<Left><Left>
 
 " ### Buffers ###
 " Navigation between buffers
-nnoremap <silent> <Leader>bl :bn<CR>
-nnoremap <silent> <Leader>bh :bp<CR>
+nnoremap <silent> <Leader>( :bn<CR>
+nnoremap <silent> <Leader>) :bp<CR>
 
 " Close buffer
-nnoremap <silent> <Leader>bc :bd<CR>
+nnoremap <silent> <Leader>c :bd<CR>
 
 " ### Tabs ###
 " Navigate through tabs
-nnoremap <silent> <Leader>tn :tabnew<CR>
-nnoremap <silent> <Leader>tc :tabclose<CR>
-nnoremap <silent> <Leader>tl :tabnext<CR>
-nnoremap <silent> <Leader>th :tabprev<CR>
-" nnoremap <Tab> gt
-" nnoremap <S-Tab> gT
-" nnoremap <silent> <S-t> :tabnew<CR>
+nnoremap <silent> tt :tabnew<CR>
+nnoremap <silent> tc :tabclose<CR>
+nnoremap <silent> tn :tabnext<CR>
+nnoremap <silent> tp :tabprev<CR>
 
-" Tab navigation using the the leader key and number row
-nnoremap <Leader>1 1gt
-nnoremap <Leader>2 2gt
-nnoremap <Leader>3 3gt
-nnoremap <Leader>4 4gt
-nnoremap <Leader>5 5gt
+" Browser like navigation
+" nnoremap <C-S-tab> :tabprevious<CR>
+" nnoremap <C-tab>   :tabnext<CR>
+" nnoremap <C-t>     :tabnew<CR>
+" nnoremap <C-w>     :tabclose<CR>
 
 " ### Windows ###
 " Navigation through windows
@@ -320,54 +312,55 @@ nnoremap <silent> <C-w>c :wincmd c<CR>
 " endfunction
 
 " Resize window
-noremap <silent> <C-Left> :vertical resize +3<CR>
+noremap <silent> <C-Left>  :vertical resize +3<CR>
 noremap <silent> <C-Right> :vertical resize -3<CR>
-noremap <silent> <C-Up> :resize +3<CR>
-noremap <silent> <C-Down> :resize -3<CR>
+noremap <silent> <C-Up>    :resize +3<CR>
+noremap <silent> <C-Down>  :resize -3<CR>
 
-" Equalize windows width or height
+" Equalize windows width and height
 noremap <silent> <C-w>= :wincmd =<CR>
 
 " Maximize window's width or height
-" TODO: close NERDTree if it is open b4 maximizing window and reopen it after that.
+" TODO: close coc-explorer if it is open b4 maximizing window and reopen it after that.
 " TODO: Map <C-w>z to maximize either horizontaly or verticaly (tmux like
 " behavior)
 nnoremap <silent> <C-w>v :wincmd _<CR>
 nnoremap <silent> <C-w>h :wincmd \|<CR>
 
 " Change window from vertical to horizontal
-nnoremap <silent> <C-w><Up> :call VerticalToHorizontal()<CR>
+" nnoremap <silent> <C-w><Up> :call VerticalToHorizontal()<CR>
 
+" TODO: adapt to coc-explorer
 " Close NERDTree if it's open before flip window from vertical to horizontal and after that reopen it
-function g:VerticalToHorizontal()
-    if exists("g:NERDTree") && g:NERDTree.IsOpen()
-        execute ":NERDTreeClose"
-        execute ":wincmd" "t"
-        execute ":wincmd" "H"
-        execute ":NERDTree"
-        execute ":wincmd" "l"
-    else
-        execute ":wincmd" "t"
-        execute ":wincmd" "H"
-    endif
-endfunc
+" function g:VerticalToHorizontal()
+"     if exists("g:NERDTree") && g:NERDTree.IsOpen()
+"         execute ":NERDTreeClose"
+"         execute ":wincmd" "t"
+"         execute ":wincmd" "H"
+"         execute ":NERDTree"
+"         execute ":wincmd" "l"
+"     else
+"         execute ":wincmd" "t"
+"         execute ":wincmd" "H"
+"     endif
+" endfunc
 
 " Change window from horizontal to vertical
-nnoremap <silent> <C-w><Down> :call HorizontalTovertical()<CR>
+" nnoremap <silent> <C-w><Down> :call HorizontalTovertical()<CR>
 
 " Close NERDTree if it's open before flip window from horizontal to vertical and after that reopen it
-function g:HorizontalTovertical()
-    if exists("g:NERDTree") && g:NERDTree.IsOpen()
-        execute ":NERDTreeClose"
-        execute ":wincmd" "t"
-        execute ":wincmd" "K"
-        execute ":NERDTree"
-        execute ":wincmd" "l"
-    else
-        execute ":wincmd" "t"
-        execute ":wincmd" "K"
-    endif
-endfunc
+" function g:HorizontalTovertical()
+"     if exists("g:NERDTree") && g:NERDTree.IsOpen()
+"         execute ":NERDTreeClose"
+"         execute ":wincmd" "t"
+"         execute ":wincmd" "K"
+"         execute ":NERDTree"
+"         execute ":wincmd" "l"
+"     else
+"         execute ":wincmd" "t"
+"         execute ":wincmd" "K"
+"     endif
+" endfunc
 
 " ### Terminal ###
 " Open terminal window

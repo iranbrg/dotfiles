@@ -14,6 +14,7 @@ let g:coc_global_extensions = [
   \ 'coc-highlight',
   \ 'coc-pairs',
   \ 'coc-tabnine',
+  \ 'coc-eslint',
   \ 'coc-prettier',
   \ 'coc-snippets',
   \ 'coc-html',
@@ -87,6 +88,11 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Remap keys for applying codeAction to the current line.
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+" nmap <leader>qf  <Plug>(coc-fix-current)
+
 " Search the symbol below the cursor acCRoss the projects files
 nnoremap <leader>rs :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
@@ -96,6 +102,10 @@ xmap <leader>x  <Plug>(coc-convert-snippet)
 
 " ### coc-explorer ###
 nmap <silent> <C-b> :CocCommand explorer<CR>
+
+" ### coc-pairs ###
+" Prevent `coc-pairs` from breaking `vim-closetag`
+autocmd BufNewFile,BufRead *.html,*.xhtml,*.phtml,*.jsx,*.js,*.tsx let b:coc_pairs_disabled = ['<']
 
 " Command :Prettier to format current buffer
 command! -nargs=0 Prettier :CocCommand prettier.formatFile

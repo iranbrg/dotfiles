@@ -1,10 +1,17 @@
 {
-    // coc-pairs
-    "pairs.enableCharacters": ["(", "[", "{", "'", "\"", "`"],
+    "coc.preferences.formatOnSaveFiletypes": [
+        "html",
+        "css",
+        "javascript",
+        "json",
+        "jsonc",
+        "markdown"
+    ],
 
     // coc-explorer
     "explorer.width": 30,
     "explorer.icon.enableNerdfont": true,
+    "explorer.file.column.indent.indentLine": false,
     "explorer.previewAction.onHover": false,
     "explorer.file.showHiddenFiles": true,
     "explorer.buffer.showHiddenBuffers": true,
@@ -16,5 +23,11 @@
         "\\": "open:vsplit",
         "s": "gitStage",
         "u": "gitUnstage"
-    }
+    },
+
+    // coc-prettier
+    "prettier.tabWidth": 4,
+
+    // coc-eslint
+    "eslint.autoFixOnSave": true
 }

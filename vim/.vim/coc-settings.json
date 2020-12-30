@@ -22,7 +22,6 @@
     // coc-explorer
     "explorer.width": 30,
     "explorer.icon.enableNerdfont": true,
-    "explorer.file.column.indent.indentLine": false,
     "explorer.previewAction.onHover": false,
     "explorer.file.showHiddenFiles": true,
     "explorer.buffer.showHiddenBuffers": true,

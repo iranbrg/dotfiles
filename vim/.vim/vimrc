@@ -70,24 +70,21 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 
 " Support for expanding HTML abbreviations like emmet
-Plug 'mattn/emmet-vim', { 'for': 'html' }
+Plug 'mattn/emmet-vim'
 
 Plug 'alvan/vim-closetag'
 
 " Snippets
 Plug 'honza/vim-snippets'
 
-" JSON syntax (comment highlighting especially)
-Plug 'kevinoid/vim-jsonc', { 'for': ['json', 'jsonc'] }
-
 " A filetype plugin for csv files
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'chrisbra/csv.vim'
 
 " Filetype plugin for LaTeX files.
-Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'lervag/vimtex'
 
 " Lively previewing LaTeX PDF output
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'xuhdev/vim-latex-live-preview'
 
 " Syntax and indentation support for various filetypes
 Plug 'sheerun/vim-polyglot'
@@ -99,7 +96,6 @@ Plug 'editorconfig/editorconfig-vim'
 " Fuzzy finder and more
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-rooter'
 
 " ### Git ###
 " Git integration
@@ -120,12 +116,6 @@ Plug 'machakann/vim-highlightedyank'
 
 " Displays indentation level for code indented with spaces
 Plug 'yggdroot/indentline'
-
-" Displays the ctags-generated tags of the current file, ordered by their scope (to consider)
-" Plug 'majutsushi/tagbar'
-
-" Navigate seamlessly between vim and tmux splits (to consider)
-" Plugin 'christoomey/vim-tmux-navigator'
 
 " ### UI ###
 " Color scheme

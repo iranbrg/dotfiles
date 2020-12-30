@@ -14,6 +14,9 @@ export PAGER="less"
 # Uses `bat` to colorize man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+# `less` defaults
+export LESS="-RF" # -R interpret ANSI colors, -F exit if the output size is smaller than the screen vertical size
+
 # Purple group coloring in long list for 'exa'
 export EXA_COLORS="gu=35;1"
 
@@ -26,7 +29,7 @@ FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
 
 # `fzf` defaults
 FZF_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='C-e, ?, C-d, C-u, C-y'"
-FZF_BIND="--bind='ctrl-e:execute(echo {+} | xargs -o $EDITOR)+accept,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard)'"
+FZF_BIND="--bind='ctrl-e:execute(echo {+} | xargs -o $EDITOR)+abort,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard)'"
 FZF_PREVIEW="--preview='([[ -f {} ]] && (bat -n $BAT_OPTS {} || cat {})) || \
                         ([[ -d {} ]] && (tree -aC {} | less)) || \
                         echo {} 2> /dev/null | head -200'"
@@ -41,7 +44,6 @@ export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
 # +---------+
 # Load aliases and shortcuts if existent.
 # [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
-
 # Overwrite existing commands for better defaults
 alias mv="mv -vi"
 alias mkdir="mkdir -vp"
@@ -49,6 +51,7 @@ alias df="df -h"
 alias cp="cp -vi"
 alias rm="rm -vI"
 alias free="free -h"
+alias tree="tree -aCL 1"
 alias ss="sudo ss -plunt" # To show the PID and name of some processes this command must be run with sudo
 
 
@@ -58,7 +61,7 @@ alias ls="exa -a --icons --color=auto --group-directories-first"
 alias stow="stow -v"
 alias bat="bat $BAT_OPTS"
 alias fd="fd $FD_OPTS"
-alias rg="rg --column --smart-case --follow --hidden -p -g '!.git/*' -g '!node_modules/*'"
+alias rg="rg --column --smart-case --follow --hidden --pretty -g '!.git/*' -g '!node_modules/*'"
 alias live-server="browser-sync start --server --files . --no-notify --port 5500"
 alias sozsh="source ~/.zshrc"
 alias xcopy='xclip -selection clipboard'
@@ -143,15 +146,16 @@ for m in visual viopp; do
 done
 
 # fzf acts like a selector interface for ripgrep rather than a 'fuzzy finder'
-# TODO: make a better previewer for ripgrep like the one used in fzf.vim
-RipgrepFzf () {
+RipgrepFzf() {
     INITIAL_QUERY=""
-    RG_PREFIX="rg --follow --column --line-number --no-heading --color=always --smart-case --hidden -g '!.git/*' -g '!node_modules/*'"
+    RG_PREFIX="rg --column --color=always --smart-case --no-heading --line-number --follow --hidden -p -g '!.git/*' -g '!node_modules/*'"
     FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY'" \
         fzf --bind "change:reload:$RG_PREFIX {q} || true" \
-        --ansi --phony --query "$INITIAL_QUERY" \
-        -m --height 50% --reverse --border --cycle --inline-info --no-header \
-        --preview="/home/iran/dotfiles/vim/.vim/plugged/fzf.vim/bin/preview.sh {}"
+            --bind "ctrl-e:execute(echo {1} | xargs -o $EDITOR +{2})+abort" \
+            --ansi --phony --query "$INITIAL_QUERY" \
+            --delimiter : \
+            --preview "bat $BAT_OPTS --style=numbers --highlight-line {2} {1}" \
+            --preview-window +{2}-/2
 }
 
 bindkey -s "\C-g" "RipgrepFzf\n"

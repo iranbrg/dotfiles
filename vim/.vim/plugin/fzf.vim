@@ -7,14 +7,13 @@ nnoremap <silent> <C-p> :FzfFiles<CR>
 nnoremap <silent> <C-g> :FzfRg<CR>
 nnoremap <silent> <Leader>b :FzfBuffers<CR>
 nnoremap <silent> q: :FzfHistory:<CR>
-" nnoremap <silent> <C-/> :FzfHistory/<CR>
-" nnoremap <silent> <Leader>fc :Commits<CR>
+" Make vim recognize <C-/>
+map  <C-/>
+nnoremap <silent> <C-/> :FzfHistory/<CR>
+" nnoremap <silent> <Leader>fc :FzfCommits<CR>
 
 " Path completion in insert mode (acts like C-t in terminal)
 inoremap <expr> <C-t> fzf#vim#complete#path('fd --hidden --follow --exclude .git --exclude node_modules')
-
-" Search the symbol below the cursor accross the projects files
-nnoremap <C-f> :FzfRg <C-r>=expand("<cword>")<CR><CR>
 
 command! -nargs=* -bang FzfRg call RipgrepFzf(<q-args>, <bang>0)
 

@@ -1,4 +1,15 @@
 {
+    // Custom language servers
+    "languageserver": {
+        // Run npm i -g bash-language-server to install the language server
+        "bash": {
+            "command": "bash-language-server",
+            "args": ["start"],
+            "filetypes": ["sh", "bash", "zsh"],
+            "ignoredRootPaths": ["~"]
+        }
+    },
+
     "coc.preferences.formatOnSaveFiletypes": [
         "html",
         "css",

@@ -117,6 +117,13 @@ Plug 'machakann/vim-highlightedyank'
 " Displays indentation level for code indented with spaces
 Plug 'yggdroot/indentline'
 
+" Vim terminal in the floating window
+if has('nvim')
+    Plug 'voldikss/vim-floaterm' { 'do': { 'pip3 install neovim-remote' } }
+else
+    Plug 'voldikss/vim-floaterm'
+endif
+
 " ### UI ###
 " Color scheme
 Plug 'morhetz/gruvbox'
@@ -266,10 +273,10 @@ nnoremap <silent> <Leader>c :bd<CR>
 
 " ### Tabs ###
 " Navigate through tabs
-nnoremap <silent> tt :tabnew<CR>
-nnoremap <silent> tc :tabclose<CR>
-nnoremap <silent> tn :tabnext<CR>
-nnoremap <silent> tp :tabprev<CR>
+nnoremap <silent> <Leader>tt :tabnew<CR>
+nnoremap <silent> <Leader>tc :tabclose<CR>
+nnoremap <silent> <Leader>tn :tabnext<CR>
+nnoremap <silent> <Leader>tp :tabprev<CR>
 
 " Browser like navigation
 " nnoremap <C-S-tab> :tabprevious<CR>

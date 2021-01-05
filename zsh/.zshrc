@@ -87,7 +87,10 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
 setopt inc_append_history
-setopt extended_history
+setopt extended_history     # write the history file in the ":start:elapsed;command" format
+setopt hist_reduce_blanks   # remove superfluous blanks before recording entry
+setopt hist_ignore_all_dups # delete old recorded entry if new entry is a duplicate
+setopt share_history        # share history between all sessions
 
 # Enable interactive comments (# on the command line)
 setopt interactivecomments
@@ -125,7 +128,6 @@ bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
-bindkey "^?" backward-delete-char # Fix backspace bug when switching modes
 
 # Edit inside quotes (like 'ci"')
 autoload -U select-quoted
@@ -226,6 +228,13 @@ docker() {
 #     fi
 # }
 # bindkey -s '^o' 'lfcd\n'
+
+# make terminal command navigation sane again
+bindkey "^[[1;5C" forward-word                      # [Ctrl-right] - forward one word
+bindkey "^[[1;5D" backward-word                     # [Ctrl-left] - backward one word
+bindkey '^[^[[C' forward-word                       # [Ctrl-right] - forward one word
+bindkey '^[^[[D' backward-word                      # [Ctrl-left] - backward one word
+bindkey '^?' backward-delete-char                   # [Backspace] - delete backward
 
 # +---------+
 # | Plugins |

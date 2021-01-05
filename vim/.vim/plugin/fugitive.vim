@@ -1,3 +1,4 @@
+noremap <Leader>gb :Gbrowse<CR>
 noremap <Leader>ga :Gwrite<CR>
 noremap <Leader>gc :Gcommit<CR>
 noremap <Leader>gd :Gvdiffsplit<CR>

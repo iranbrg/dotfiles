@@ -1,7 +1,7 @@
-noremap <Leader>gb :Gbrowse<CR>
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gd :Gvdiffsplit<CR>
-noremap <Leader>gs :G<CR>
-noremap <Leader>gl :diffget //3<CR>
-noremap <Leader>gh :diffget //2<CR>
+noremap <silent> <Leader>gb :Gbrowse<CR>
+noremap <silent> <Leader>ga :Gwrite<CR>
+noremap <silent> <Leader>gc :Gcommit<CR>
+noremap <silent> <Leader>gd :Gvdiffsplit<CR>
+noremap <silent> <Leader>gs :G<CR>
+noremap <silent> <Leader>gl :diffget //3<CR>
+noremap <silent> <Leader>gh :diffget //2<CR>

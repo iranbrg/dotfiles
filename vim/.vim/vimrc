@@ -183,15 +183,9 @@ set scrolloff=5
 set sidescroll=5
 
 " Folding
-autocmd BufWinEnter * call Folding()
-
-function Folding()
-    if &fdm != "marker"
-        setlocal foldmethod=syntax " Folds are defined by syntax highlighting
-        setlocal nofoldenable      " Disables auto folding on opening file
-        setlocal foldlevel=99      " Start editing with no folds closed
-    endif
-endfunction
+setlocal foldmethod=syntax " Folds are defined by syntax highlighting
+setlocal nofoldenable      " Disables auto folding on opening file
+setlocal foldlevel=99      " Start editing with no folds closed
 
 " Always have the clipboard be the same as my regular clipboard
 if has('unnamedplus')
@@ -266,7 +260,7 @@ nnoremap <silent> <Leader>( :bn<CR>
 nnoremap <silent> <Leader>) :bp<CR>
 
 " Close buffer
-nnoremap <silent> <Leader>c :bd<CR>
+nnoremap <silent> <Leader>bc :bd<CR>
 
 " ### Tabs ###
 " Navigate through tabs
@@ -373,3 +367,5 @@ highlight Comment cterm=italic gui=italic
 " Highlight git conflicts
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 "}}}
+
+" vim: foldmethod=marker:foldlevel=0:foldenable

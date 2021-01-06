@@ -28,8 +28,8 @@ BAT_OPTS="--italic-text=always --color=always"
 FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
 
 # `fzf` defaults
-FZF_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='C-e, ?, C-d, C-u, C-g, C-a, C-l, C-y, PgDn, PgUp'"
-FZF_BIND="--bind='ctrl-e:execute(echo {+} | xargs -o $EDITOR)+abort,?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-g:top,ctrl-a:select-all,ctrl-l:clear-selection,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard),pgdn:preview-down,pgup:preview-up'"
+FZF_OPTS="-m --height 50% --reverse --border --cycle --inline-info --header='?, C-d, C-u, C-g, C-a, C-l, C-y, PgDn, PgUp'"
+FZF_BIND="--bind='?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-g:top,ctrl-a:select-all,ctrl-l:clear-selection,ctrl-y:execute-silent(echo {+} | xclip -selection clipboard),pgdn:preview-down,pgup:preview-up'"
 FZF_PREVIEW="--preview='([[ -f {} ]] && (bat -n $BAT_OPTS {} || cat {})) || \
                         ([[ -d {} ]] && (tree -aC {} | less)) || \
                         echo {} 2> /dev/null | head -200'"
@@ -115,7 +115,7 @@ KEYTIMEOUT=1 # Recommended time to wait for additional characters in a sequence 
 # +-------------+
 # | Keybindings |
 # +-------------+
-bindkey -s "\C-p" "fzf\n"
+bindkey -s "\C-p" "fzf | xargs -o $EDITOR\n"
 
 # Edit line in vim buffer 'ctrl-e'
 autoload -Uz edit-command-line

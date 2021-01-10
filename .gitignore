@@ -5,7 +5,7 @@ vim/.vim/*
 !vim/.vim/vimrc
 !vim/.vim/plugin
 !vim/.vim/coc-settings.json
-!vim/.vim/filetype.vim
+!vim/.vim/after
 
 tmux/.tmux/plugins/*
 !tmux/.tmux/plugins/tpm

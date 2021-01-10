@@ -245,7 +245,7 @@ vnoremap <S-Tab> <gv
 " vnoremap <silent> <A-Down> :m '>+1<CR>gv=gv
 
 " Fast edit '.vimrc' file
-nmap <Leader>e :tabnew $MYVIMRC<CR>
+nmap <C-e> :tabnew $MYVIMRC<CR>
 
 " ### Find and Replace ###
 " All occurences of selection

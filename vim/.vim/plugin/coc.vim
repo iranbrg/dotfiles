@@ -27,6 +27,9 @@ let g:coc_global_extensions = [
 " Search the symbol below the cursor accross the projects files
 nnoremap <Leader>rs :CocSearch <C-r>=expand("<cword>")<CR><CR>
 
+" ### coc-marketplace ###
+nnoremap <silent><nowait> <Leader>E :<C-u>CocList marketplace<CR>
+
 " ### coc-snippets ###
 " Use <leader>x for convert visual selected code to snippet
 xmap <Leader>x <Plug>(coc-convert-snippet)
@@ -36,7 +39,7 @@ nmap <silent> <C-b> :CocCommand explorer<CR>
 
 " ### coc-pairs ###
 " Prevent `coc-pairs` from breaking `vim-closetag`
-autocmd BufNewFile,BufRead *.html,*.xhtml,*.phtml,*.jsx,*.js,*.tsx let b:coc_pairs_disabled = ['<']
+autocmd BufNewFile,BufRead *.html,*.xhtml,*.phtml,*.jsx,*.tsx let b:coc_pairs_disabled = ['<']
 
 " ### coc-prettier ###
 " Command :Prettier to format current buffer
@@ -132,8 +135,12 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <Leader>g :<C-u>CocList diagnostics<cr>
-" Show commands.
-nnoremap <silent><nowait> <Leader>c :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <Leader>g :<C-u>CocList diagnostics<CR>
+" Manage extensions.
+nnoremap <silent><nowait> <Leader>e :<C-u>CocList extensions<CR>
+"Show commands.
+nnoremap <silent><nowait> <Leader>c :<C-u>CocList commands<CR>
 " Find symbol of current document.
-nnoremap <silent><nowait> <Leader>o :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <Leader>o :<C-u>CocList outline<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <Leader>. :<C-u>CocListResume<CR>

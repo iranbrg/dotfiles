@@ -11,7 +11,6 @@
     },
 
     "coc.preferences.formatOnType": true,
-
     "coc.preferences.formatOnSaveFiletypes": [
         "html",
         "css",
@@ -34,11 +33,14 @@
         "-": "open:split",
         "\\": "open:vsplit",
         "s": "gitStage",
-        "u": "gitUnstage"
+        "u": "gitUnstage",
+        "gH": "collapse:all"
     },
 
     // coc-prettier
     "prettier.tabWidth": 4,
+    "prettier.arrowParens": "avoid",
+    "prettier.trailingComma": "none",
 
     // coc-eslint
     "eslint.autoFixOnSave": true

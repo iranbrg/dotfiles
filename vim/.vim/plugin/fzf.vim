@@ -9,7 +9,7 @@ nnoremap <silent> <Leader>b :FzfBuffers<CR>
 nnoremap <silent> q: :FzfHistory:<CR>
 nnoremap <silent> q/ :FzfHistory/<CR>
 
-" Path completion in insert mode (acts like C-t in terminal)
+" Path completion in insert mode (acts like <C-t> in the terminal)
 inoremap <expr> <C-t> fzf#vim#complete#path('fd --hidden --follow --exclude .git --exclude node_modules')
 
 " Replace the default `FzfRg` command

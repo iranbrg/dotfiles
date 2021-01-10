@@ -39,14 +39,14 @@ autocmd User Startified setlocal cursorline
 
 " Run Startify for each new tab
  " if has('nvim')
- "   autocmd TabNewEntered * Startify
+ "    autocmd TabNewEntered * Startify
  " else
- "   autocmd BufWinEnter *
- "         \ if !exists('t:startify_new_tab')
- "         \     && empty(expand('%'))
- "         \     && empty(&l:buftype)
- "         \     && &l:modifiable |
- "         \   let t:startify_new_tab = 1 |
- "         \   Startify |
- "         \ endif
+ "    autocmd BufWinEnter *
+ "        \ if !exists('t:startify_new_tab')
+ "        \     && empty(expand('%'))
+ "        \     && empty(&l:buftype)
+ "        \     && &l:modifiable |
+ "        \     let t:startify_new_tab = 1 |
+ "        \     Startify |
+ "        \ endif
  " endif

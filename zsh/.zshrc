@@ -44,6 +44,7 @@ export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
 # +---------+
 # Load aliases and shortcuts if existent.
 # [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
+
 # Overwrite existing commands for better defaults
 alias mv="mv -vi"
 alias mkdir="mkdir -vp"
@@ -66,6 +67,7 @@ alias live-server="browser-sync start --server --files . --no-notify --port 5500
 alias sozsh="source ~/.zshrc"
 alias xcopy='xclip -selection clipboard'
 alias xpaste='xclip -selection clipboard -o'
+alias lg=="lazygit"
 
 # +----+
 # | UI |

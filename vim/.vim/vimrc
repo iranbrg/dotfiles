@@ -72,8 +72,6 @@ Plug 'tpope/vim-surround'
 " Support for expanding HTML abbreviations like emmet
 Plug 'mattn/emmet-vim'
 
-Plug 'alvan/vim-closetag'
-
 " Snippets
 Plug 'honza/vim-snippets'
 
@@ -83,14 +81,14 @@ Plug 'lervag/vimtex'
 " Lively previewing LaTeX PDF output
 Plug 'xuhdev/vim-latex-live-preview'
 
-" Syntax and indentation support for various filetypes
-Plug 'sheerun/vim-polyglot'
-
 " .editorconfig support
 Plug 'editorconfig/editorconfig-vim'
 
+" Syntax and indentation support for various filetypes
+Plug 'sheerun/vim-polyglot'
+
 " ### Files ###
-" Fuzzy finder and more
+" Fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
@@ -131,8 +129,6 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Start screen for Vim
 Plug 'mhinz/vim-startify'
-
-Plug 'junegunn/rainbow_parentheses.vim'
 
 " Adds file type icons and its colors (must be the last intalled plugin)
 Plug 'ryanoasis/vim-devicons'
@@ -183,9 +179,9 @@ set scrolloff=5
 set sidescroll=5
 
 " Folding
-setlocal foldmethod=syntax " Folds are defined by syntax highlighting
-setlocal nofoldenable      " Disables auto folding on opening file
-setlocal foldlevel=99      " Start editing with no folds closed
+set foldmethod=syntax " Folds are defined by syntax highlighting
+set nofoldenable      " Disables auto folding on opening file
+set foldlevel=99      " Start editing with no folds closed
 
 " Always have the clipboard be the same as my regular clipboard
 if has('unnamedplus')
@@ -206,7 +202,7 @@ augroup END
 " {{{
 " ### General ###
 " Setting <Leader> key to spacebar
-let mapleader=" "
+let mapleader="\<Space>"
 
 " Make backspace behave more reasonably, in that you can backspace over anything
 set backspace=indent,eol,start
@@ -260,7 +256,7 @@ nnoremap <silent> <Leader>( :bn<CR>
 nnoremap <silent> <Leader>) :bp<CR>
 
 " Close buffer
-nnoremap <silent> <Leader>bc :bd<CR>
+nnoremap <silent> <Leader>d :bd<CR>
 
 " ### Tabs ###
 " Navigate through tabs

@@ -18,3 +18,15 @@ let g:floaterm_keymap_prev   = "<C-t>p"
 let g:floaterm_keymap_toggle = "<C-t>o"
 
 nnoremap <silent> <C-t>g :FloatermNew lazygit<CR>
+
+" let g:floaterm_keymap_new    = "<C-S-'>"
+" let g:floaterm_keymap_next   = "<Leader>tn"
+" let g:floaterm_keymap_prev   = "<Leader>tp"
+" let g:floaterm_keymap_toggle = "<C-'>"
+
+" let g:floaterm_keymap_new    = "<Leader>tc"
+" let g:floaterm_keymap_next   = "<Leader>tn"
+" let g:floaterm_keymap_prev   = "<Leader>tp"
+" let g:floaterm_keymap_toggle = "<Leader>to"
+
+" nnoremap <silent> <Leader>tg :FloatermNew lazygit<CR>

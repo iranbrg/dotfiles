@@ -1,5 +1,4 @@
 {
-    // Custom language servers
     "languageserver": {
         // Run npm i -g bash-language-server to install the language server
         "bash": {
@@ -16,8 +15,7 @@
         "css",
         "javascript",
         "json",
-        "jsonc",
-        "markdown"
+        "jsonc"
     ],
 
     // coc-explorer
@@ -43,5 +41,8 @@
     "prettier.trailingComma": "none",
 
     // coc-eslint
-    "eslint.autoFixOnSave": true
+    "eslint.autoFixOnSave": true,
+
+    // coc-html
+    "html.autoClosingTags": true
 }

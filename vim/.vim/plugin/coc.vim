@@ -5,22 +5,18 @@ let g:coc_global_extensions = [
     \ 'coc-highlight',
     \ 'coc-pairs',
     \ 'coc-tabnine',
+    \ 'coc-snippets',
+    \ 'coc-floaterm',
     \ 'coc-eslint',
     \ 'coc-prettier',
-    \ 'coc-snippets',
     \ 'coc-html',
     \ 'coc-css',
     \ 'coc-tsserver',
     \ 'coc-json',
-    \ 'coc-markdownlint',
     \ 'coc-python',
-    \ 'coc-java',
     \ 'coc-sh',
-    \ 'coc-sql',
     \ 'coc-vimlsp',
-    \ 'coc-yaml',
     \ 'coc-vimtex',
-    \ 'coc-docker',
     \ 'coc-clangd'
     \ ]
 
@@ -37,13 +33,12 @@ xmap <Leader>x <Plug>(coc-convert-snippet)
 " ### coc-explorer ###
 nmap <silent> <C-b> :CocCommand explorer<CR>
 
-" ### coc-pairs ###
-" Prevent `coc-pairs` from breaking `vim-closetag`
-autocmd BufNewFile,BufRead *.html,*.xhtml,*.phtml,*.jsx,*.tsx let b:coc_pairs_disabled = ['<']
-
 " ### coc-prettier ###
 " Command :Prettier to format current buffer
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" ### coc-floaterm ###
+nnoremap <silent><nowait> <Leader>T :<C-u>CocList floaterm<CR>
 
 " ### General Settings ###
 " Don't pass messages to |ins-completion-menu|.

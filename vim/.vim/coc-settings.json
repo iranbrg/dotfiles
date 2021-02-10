@@ -26,7 +26,6 @@
     "explorer.buffer.showHiddenBuffers": true,
     "explorer.datetime.format": "dd/MM/yy HH:mm:ss",
     "explorer.filename.colored.enable": true,
-    "explorer.git.showIgnored": true,
     "explorer.keyMappings.global": {
         "-": "open:split",
         "\\": "open:vsplit",

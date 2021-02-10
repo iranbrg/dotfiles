@@ -4,7 +4,6 @@ let g:coc_global_extensions = [
     \ 'coc-explorer',
     \ 'coc-highlight',
     \ 'coc-pairs',
-    \ 'coc-tabnine',
     \ 'coc-snippets',
     \ 'coc-floaterm',
     \ 'coc-eslint',

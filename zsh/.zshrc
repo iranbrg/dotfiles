@@ -8,8 +8,8 @@ export XDG_CACHE_HOME="$HOME/.local/share"
 
 # Default programs
 export TERM=xterm-256color
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 export PAGER="less"
 # Uses `bat` to colorize man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -36,7 +36,7 @@ FZF_PREVIEW="--preview='([[ -f {} ]] && (bat -n $BAT_OPTS {} || cat {})) || \
 export FZF_DEFAULT_OPTS="$FZF_OPTS $FZF_BIND $FZF_PREVIEW"
 export FZF_DEFAULT_COMMAND="fd --type f $FD_OPTS"
 export FZF_CTRL_T_COMMAND="fd $FD_OPTS"
-export FZF_CTRL_R_OPTS="--preview-window down:3:wrap"
+export FZF_CTRL_R_OPTS="--preview-window hidden:down:3:wrap"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
 
 # +---------+

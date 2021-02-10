@@ -2,11 +2,22 @@
 " | Some Pre-config |
 " +-----------------+
 "{{{
-" Vi compatible mode is disabled so that Vim things work properly
-set nocompatible
+if !has('nvim')
+    " Vi compatible mode is disabled so that Vim things work properly
+    set nocompatible
 
-" Setting the output encoding shown in the terminal
-set encoding=UTF-8
+    " Load filetype-specific indent and plugin files
+    filetype plugin indent on
+
+    " Setting the output encoding shown in the terminal
+    set encoding=UTF-8
+
+    " Always show the status line at the bottom, even if you only have one window open.
+    set laststatus=2
+
+    " Improve smoothness of redrawing
+    set ttyfast
+endif
 
 " Let you hide a buffer (i.e. have a buffer that isn't shown in any window)
 set hidden
@@ -14,17 +25,8 @@ set hidden
 " Enable mouse support
 set mouse+=a
 
-" Always show the status line at the bottom, even if you only have one window open.
-set laststatus=2
-
 " Always show tabs
 set showtabline=2
-
-" Load filetype-specific indent and plugin files
-filetype plugin indent on
-
-" Improve smoothness of redrawing
-set ttyfast
 
 " The screen won't be redrawn while executing macros
 set lazyredraw
@@ -107,14 +109,16 @@ Plug 'mhinz/vim-signify'
 Plug 'mbbill/undotree'
 
 " Highlight on yank
-Plug 'machakann/vim-highlightedyank'
+if !has('nvim')
+    Plug 'machakann/vim-highlightedyank'
+endif
 
 " Displays indentation level for code indented with spaces
 Plug 'yggdroot/indentline'
 
 " Vim terminal in the floating window
 if has('nvim')
-    Plug 'voldikss/vim-floaterm' { 'do': { 'pip3 install neovim-remote' } }
+    Plug 'voldikss/vim-floaterm', { 'do': 'pip3 install neovim-remote' }
 else
     Plug 'voldikss/vim-floaterm'
 endif
@@ -141,30 +145,36 @@ call plug#end()
 " | Basic Config |
 " +--------------+
 " {{{
-" Turn on syntax highlighting
-syntax on
+if !has('nvim')
+    " Turn on syntax highlighting
+    syntax on
+
+    " Visual autocompletion for command-line mode
+    set wildmenu
+    set wildmode=list:full
+endif
 
 " Indentation
 set tabstop=4     " Number of columns of whitespaces a \t represents
 set shiftwidth=4  " A level of indentation is 4 spaces
 set softtabstop=4 " Number of spaces that a <Tab> counts
 set expandtab     " '\t' character will be expanded into spaces
-set autoindent    " Automatically indent newlines
 set smartindent   " Does the right thing (mostly) in programs
+if !has('nvim')
+    set autoindent    " Automatically indent newlines
+endif
 
 " Line numbering
-set nu
-set rnu
+set number
+set relativenumber
 
 " Search config
-set hlsearch
-set incsearch
+if !has('nvim')
+    set hlsearch
+    set incsearch
+endif
 set ignorecase
 set smartcase
-
-" Visual autocompletion for command-line mode
-set wildmenu
-set wildmode=list:full
 
 " Line breaks at a word boundary rather than in the middle (when wrapping is
 " set)
@@ -188,6 +198,20 @@ if has('unnamedplus')
     set clipboard=unnamedplus
 endif
 
+if has('nvim')
+    augroup highlight_yank
+        autocmd!
+        autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=700}
+    augroup END
+endif
+
+" Automatically change to absolute numbering once we are editings
+augroup numbertoggle
+  autocmd!
+  autocmd InsertLeave * set relativenumber
+  autocmd InsertEnter * set norelativenumber
+augroup END
+
 " Highlight current line, but only in active window
 augroup CursorLineOnlyInActiveWindow
     autocmd!
@@ -205,9 +229,11 @@ augroup END
 let mapleader="\<Space>"
 
 " Make backspace behave more reasonably, in that you can backspace over anything
-set backspace=indent,eol,start
+if !has('nvim')
+    set backspace=indent,eol,start
+endif
 
-" Unbind the annoying 'Q' which in normal mode enters Ex mode and sometimes
+" Unbind the annoying 'Q' which in normal mode enters Ex mode
 nmap Q <Nop>
 
 " Search results are centered
@@ -222,26 +248,22 @@ nnoremap <silent> <C-s> :nohlsearch<CR>
 " Stop indenting when text is pasted
 set pastetoggle=<Leader>p
 
-" Toggle relative numbering
-nnoremap <silent> <Leader>n :set rnu!<CR>
-
 " <Tab> to indent and <S-Tab> to deintent lines
 nnoremap <Tab>   >>_
 nnoremap <S-Tab> <<_
 vnoremap <Tab>   >gv
 vnoremap <S-Tab> <gv
 
-" Move lines/blocks up and down (somehow gotta map it to <A-k> and <A-j>)
-" Map these scape sequeces to make the Alt key be recognized
-" map [1;3A] <A-Up>
-" map [1;3B] <A-Down>
-" nnoremap <silent> <A-Up>   :m .-2<CR>==
-" nnoremap <silent> <A-Down> :m .+1<CR>==
-" vnoremap <silent> <A-Up>   :m '<-2<CR>gv=gv
-" vnoremap <silent> <A-Down> :m '>+1<CR>gv=gv
+" Move lines/blocks up and down
+if has('nvim')
+    nnoremap <silent> <A-Up>   :m .-2<CR>==
+    nnoremap <silent> <A-Down> :m .+1<CR>==
+    vnoremap <silent> <A-Up>   :m '<-2<CR>gv=gv
+    vnoremap <silent> <A-Down> :m '>+1<CR>gv=gv
+endif
 
 " Fast edit '.vimrc' file
-nmap <C-e> :tabnew $MYVIMRC<CR>
+nnoremap <C-e> :tabnew $MYVIMRC<CR>
 
 " ### Find and Replace ###
 " All occurences of selection
@@ -327,8 +349,7 @@ endfunc
 " ### Commands ###
 " Command :FixWhiteSpace to remove trailing whitespaces
 " TODO: Add a :noh at the final to stop highlighting spaces.
-" command! FixWhiteSpace :%s/\s\+$//e
-command! FixWhiteSpace :%s/\s\+$<CR>
+command! FixWhiteSpace :%s/\s\+$//e
 " }}}
 
 " +----+
